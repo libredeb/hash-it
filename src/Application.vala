@@ -157,7 +157,7 @@ namespace Hashit {
             scrolled_result.add (this.text_view);
 
             //Buttons
-            var copy_button           = new Button.with_label ("Copy");
+            var copy_button           = new Button.with_label (_("Copy"));
             var copy_clipboard_button = new Button.with_label ("Copy to Clipboard");
             var compare_button        = new Button.with_label ("Compare");
 

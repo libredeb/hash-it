@@ -1,10 +1,15 @@
 # Project name and programming language
 project(
-    'hashit',
+    'com.github.libredeb.hashit',
     'vala', 'c',
     version: '0.1.2',
     meson_version: '>=0.56.0'
 )
+
+# Include the translations module
+i18n = import('i18n')
+# Set our translation domain
+add_global_arguments('-DGETTEXT_PACKAGE="@0@"'.format (meson.project_name()), language:'c')
 
 PROJECT_NAME = 'hashit'
 prefix = get_option('prefix')
@@ -51,7 +56,7 @@ executable(
     'src/Main.vala',
     dependencies: [
         dependency('glib-2.0'),
-        dependency('gtk+-3.0', version: '>=3.22'),
+        dependency('gtk+-3.0'),
         dependency('gio-2.0'),
         dependency('granite'),
         # Similar to add options "-X -lm" in cmake to use Math.pow()
@@ -78,12 +83,29 @@ foreach i : icon_sizes
         join_paths('data', 'icons', i, 'hashit.svg'),
         install_dir: join_paths(datadir, 'icons', 'hicolor', i + 'x' + i, 'apps')
     )
+    install_data(
+        join_paths('data', 'icons', i, 'hashit.svg'),
+        install_dir: join_paths(datadir, 'icons', 'hicolor', i + 'x' + i + '@2', 'apps')
+    )
 endforeach
 
 # Install our .desktop file so the Applications Menu will see it
-install_data(
-    join_paths('data', meson.project_name() + '.desktop'),
-    install_dir: join_paths(datadir, 'applications')
+i18n.merge_file(
+    input: 'data' / 'com.github.libredeb.hashit.desktop.in',
+    output: meson.project_name() + '.desktop',
+    po_dir: meson.project_source_root() / 'po',
+    type: 'desktop',
+    install: true,
+    install_dir: get_option('datadir') / 'applications'
+)
+
+# Install our .appdata.xml file so AppCenter will see it
+i18n.merge_file(
+    input: 'data' / 'com.github.libredeb.hashit.appdata.xml.in',
+    output: meson.project_name() + '.metainfo.xml',
+    po_dir: meson.project_source_root() / 'po',
+    install: true,
+    install_dir: get_option('datadir') / 'metainfo'
 )
 
 # Install gfx icon files
@@ -100,10 +122,6 @@ install_data(
     install_dir: join_paths(datadir, 'hashit', 'gfx')
 )
 
-# Install schema file
-install_data(
-    join_paths('data', 'schemas', 'org.hashit.gschema.xml'),
-    install_dir: join_paths(datadir, 'glib-2.0', 'schemas')
-)
-
 meson.add_install_script('post_install.py')
+
+subdir('po')

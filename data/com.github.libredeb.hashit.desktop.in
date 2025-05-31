@@ -1,9 +1,12 @@
 [Desktop Entry]
+Version=1.0
 Type=Application
+
 Name=Hashit
 Comment=Intuitive and simple Hash Tool checker
 GenericName=Hash Checker
-Exec=hashit
+
+Exec=com.github.libredeb.hashit
 Icon=hashit
 Keywords=hash;check;sum;md5;sha256;
 Terminal=false
@@ -13,4 +16,4 @@ X-GNOME-Gettext-Domain=hashit
 
 [Desktop Action AboutDialog]
 Name=About Hashit
-Exec=hashit --about
+Exec=com.github.libredeb.hashit --about

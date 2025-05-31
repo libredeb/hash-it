@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright 2020 Juan Pablo Lozano <libredeb@gmail.com> -->
+<component type="desktop-application">
+  <branding>
+    <color type="primary">#36642c</color>
+  </branding>
+
+  <id>com.github.libredeb.hashit</id>
+  <launchable type="desktop-id">com.github.libredeb.hashit.desktop</launchable>
+  <metadata_license>CC-BY-4.0</metadata_license>
+  <project_license>GPL-3.0-or-later</project_license>
+
+  <name>Hash-it</name>
+  <summary>The most intuitive and simple hash tool checker for elementary OS</summary>
+  <description>
+    <p>Hashit is a fast and beautiful hash check tool.</p>
+    <p>Writen in Vala and GTK+ 3.0 with the purpose to get the hash of file and compare it with other provided hash.</p>
+    <p>Features included:</p>
+    <ul>
+      <li>Generate most popular hashes of files</li>
+      <li>Drag and Drop</li>
+      <li>Compare current file hash with online provided hashes</li>
+    </ul>
+  </description>
+
+  <screenshots>
+    <screenshot type="default">
+      <image>https://raw.githubusercontent.com/libredeb/hash-it/main/screenshot.png</image>
+      <caption>LightPad in action</caption>
+    </screenshot>
+  </screenshots>
+
+  <content_rating type="oars-1.1" />
+
+  <requires>
+    <display_length compare="ge">600</display_length>
+  </requires>
+
+  <supports>
+    <control>keyboard</control>
+    <control>pointing</control>
+  </supports>
+
+  <provides>
+    <binary>com.github.libredeb.hash-it</binary>
+  </provides>
+
+  <url type="bugtracker">https://github.com/libredeb/hash-it/issues</url>
+  <url type="help">https://github.com/libredeb/hash-it/discussions</url>
+  <url type="homepage">https://github.com/libredeb/hash-it</url>
+
+  <developer id="org.elementaryos">
+    <name>Juan Pablo Lozano</name>
+  </developer>
+  <project_group>hash-it</project_group>
+  <update_contact>libredeb@gmail.com</update_contact>
+
+  <custom>
+    <value key="x-appcenter-color-primary">#36642c</value>
+    <value key="x-appcenter-color-primary-text">rgb(255, 255, 255)</value>
+    <value key="x-appcenter-suggested-price">1</value>
+  </custom>
+
+  <releases>
+    <release version="0.1.2" date="2025-05-30" urgency="medium">
+      <description>
+        <p>First release.</p>
+      </description>
+    </release>
+  </releases>
+</component>

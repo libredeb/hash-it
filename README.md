@@ -3,7 +3,7 @@
 
 The most intuitive and simple hash tool checker for [elementary OS](https://elementary.io).
 
-Hashit is a fast and beautiful hash check tool. Writen in Vala and GTK+3.0 with the purpose to get the hash of file and compare it with other provided hash.
+Hashit is a fast and beautiful hash check tool. Writen in Vala and GTK+ 3.0 with the purpose to get the hash of file and compare it with other provided hash.
 
 ## Compilation
 
@@ -42,3 +42,18 @@ Hashit is a fast and beautiful hash check tool. Writen in Vala and GTK+3.0 with 
       ```sh
       sudo ninja uninstall
       ```
+
+## Developer Section
+
+### Translations
+
+To generate a new translation template file (a.k.a. `pot`) run next command:
+```sh
+cd build
+ninja com.github.libredeb.hashit-pot
+```
+
+And for generate each LINGUA `po` file, run next command:
+```sh
+ninja com.github.libredeb.hashit-update-po
+```
