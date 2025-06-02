@@ -1,231 +1,341 @@
-/* Copyright 2016 Juan Pablo Lozano
-*
-* This file is part of Hashit.
-*
-* Hashit is free software: you can redistribute it
-* and/or modify it under the terms of the GNU General Public License as
-* published by the Free Software Foundation, either version 3 of the
-* License, or (at your option) any later version.
-*
-* Hashit is distributed in the hope that it will be
-* useful, but WITHOUT ANY WARRANTY; without even the implied warranty of
-* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General
-* Public License for more details.
-*
-* You should have received a copy of the GNU General Public License along
-* with Hashit. If not, see http://www.gnu.org/licenses/.
-*/
+/*
+ * SPDX-License-Identifier: GPL-3.0-or-later
+ * SPDX-FileCopyrightText: 2016 Juan Pablo Lozano <libredeb@gmail.com>
+ */
 
-//Importing libraries GTK+, GLib and Granite
+//Importing libraries
 using Gtk;
 using GLib;
 using Granite;
 
 namespace Hashit {
 
-	public class App : Granite.Application {
+	public class App : Gtk.Application {
 
-		//Global variables to the workspace
-		public Window main_window;//Main window
-		public Hashit.GSchema.Settings settings;
-        private const Gtk.TargetEntry[] targets = {
-            {"text/uri-list",0,0}
-        };
+		//Global variables
+		public Window main_window;
+		public Gtk.Settings settings;
+
+        // HeaderBar
+        public Gtk.HeaderBar header_bar;
+        public Button open_button;
+		public Button save_button;
+		public Button clear_button;
+
         private Array<string> files_uris;
         private TextView text_view;
         private string list_of_hash;
 
 		construct
 		{
-        	build_data_dir     = Constants.DATADIR;
-            build_pkg_data_dir = Constants.PKGDATADIR;
-            build_release_name = Constants.RELEASE_NAME;
-            build_version      = Constants.VERSION;
-            build_version_info = Constants.VERSION_INFO;
+            // HeaderBar
+            this.header_bar = new Gtk.HeaderBar ();
+        	this.header_bar.add_css_class ("header_bar");
+        	this.header_bar.set_show_title_buttons (true);
+            var title = new Gtk.Label (Constants.PROGRAM_NAME);
+            this.header_bar.set_title_widget (title);
 
-        	program_name       = Constants.PROGRAM_NAME;//The name of your program
-        	exec_name          = Constants.EXEC_NAME;//The name of the executable, usually the name in lower case
+            var menu_button = new Gtk.MenuButton () {
+				icon_name = "open-menu",
+				primary = true,
+				tooltip_markup = Granite.markup_accel_tooltip ({"F10"}, "Menu")
+			};
+            var menu = new Menu ();
+            menu.append ("About", "app.about");
+            var popover = new Gtk.PopoverMenu.from_model (menu);
+            menu_button.set_popover (popover);
 
-            app_copyright      = Constants.APP_YEARS;
-        	app_years          = Constants.APP_YEARS;
-        	app_icon           = Constants.EXEC_NAME;//The icon name for the app. Normally ship it with the project in the data directory and copy it to the icon directory. Don't include file endings here.
-        	app_launcher       = Constants.APP_LAUNCHER;//The .desktop file for your app, also in data directory
-        	application_id     = "org.hashit";//An unique id which will identify your application
-        
-        	//Those urls will be shown in the automatically generated about dialog
-        	main_url           = "https://launchpad.net/hash-it";
-        	bug_url            = "https://bugs.launchpad.net/hash-it";
-        	help_url           = "https://answers.launchpad.net/hash-it";
-        	translate_url      = "https://translations.launchpad.net/hash-it";
-        
-        	//Here proudly list your own name and the names of those who helped
-        	about_authors      = {
-                                    "Juan Pablo Lozano <libredeb@gmail.com>"
-                                 };
-        	about_documenters  = {
-                                    "Juan Pablo Lozano <libredeb@gmail.com>"
-                                 };
-        	about_artists      = {
-                                    "Juan Pablo Lozano <libredeb@gmail.com>", 
-                                    "Ivan Matias Suarez <ivan.msuar@gmail.com>"
-                                 };//If anyone got an icon or a nice mockup, you can list him here
-        	about_comments     = "The most intuitive and simple hash tool checker";//A short comment on the app
-        	about_translators  = "Juan Pablo Lozano <libredeb@gmail.com>";
-            about_license      = "";
-            //This should be one of http://unstable.valadoc.org/#!api=gtk+-3.0/Gtk.License; For elementary GPL3 is the default one, it’s a good idea to use it
-        	about_license_type = License.GPL_3_0;
+            var about_action = new SimpleAction ("about", null);
+            about_action.activate.connect (() => {
+                var about = new Gtk.AboutDialog ();
+                about.set_transient_for (this.main_window);
+                about.set_modal (true);
+                about.set_program_name (Constants.PROGRAM_NAME);
+                about.set_version (Constants.VERSION);
+                about.set_copyright (Constants.APP_YEARS);
+                about.set_logo_icon_name (Constants.EXEC_NAME);
+                about.set_license ("GPL v3");
+                about.set_license_type (Gtk.License.GPL_3_0);
+                about.set_comments ("The most intuitive and simple hash tool checker");
+                about.set_authors (
+                    {
+                        "Juan Pablo Lozano <libredeb@gmail.com>"
+                    }
+                );
+                about.set_artists (
+                    {
+                        "Ivan Matias Suarez <ivan.msuar@gmail.com>"
+                    }
+                );
+                about.set_website ("https://github.com/libredeb/hash-it");
+                about.present ();
+            });
+
+            // Agregar la acción a la ventana
+            this.add_action (about_action);
+
+            open_button = new Button.from_icon_name ("folder-open");
+            open_button.set_tooltip_text ("Open File");
+            save_button = new Button.from_icon_name ("document-save-as");
+            save_button.set_tooltip_text ("Save results to a file");
+            clear_button = new Button.from_icon_name ("edit-clear");
+            clear_button.set_tooltip_text ("Clear");
+            this.header_bar.pack_start (open_button);
+            this.header_bar.pack_start (save_button);
+            this.header_bar.pack_end (menu_button);
+            this.header_bar.pack_end (clear_button);
     	}
 
     	public void build_and_run () {
-    		// Instantiate settings and Initialize variables
-    		settings = Hashit.GSchema.Settings.get_default ();
+    		// Initialize variables
             files_uris = new Array<string> ();
 
     		/*
              * Set up Window 
              */
     		this.main_window = new Window ();
-    		this.main_window.move (settings.opening_x, settings.opening_y);
         	this.main_window.set_size_request (750, 570);
-        	this.main_window.set_border_width (12);
         	this.main_window.set_title (Constants.PROGRAM_NAME);
         	this.main_window.set_icon_name (Constants.EXEC_NAME);
         	this.main_window.set_resizable (false);
         	this.main_window.set_application (this);
-        	this.main_window.get_style_context ().add_class ("main_window");
-
+        	this.main_window.add_css_class ("main_window");
 
         	/*
              * Set up UI 
              */
-        	// HeaderBar
-        	var header_bar = new Hashit.Widgets.Header (this);
-        	header_bar.get_style_context ().add_class ("header_bar");
         	this.main_window.set_titlebar (header_bar);
 
             //Boxes
-            Box main_box                = new Box (Orientation.HORIZONTAL, 0);
-            Box content_box             = new Box (Orientation.VERTICAL, 0);
-            Box drag_box                = new Box (Orientation.HORIZONTAL, 0);
-            Box combobox_box            = new Box (Orientation.HORIZONTAL, 0);
-            Box headboard_box           = new Box (Orientation.HORIZONTAL, 0);
-            Box input_fieldset_box      = new Box (Orientation.HORIZONTAL, 0);
-            Box hashtype_fieldset_box   = new Box (Orientation.HORIZONTAL, 0);
-            Box lasthash_fieldset_box   = new Box (Orientation.HORIZONTAL, 0);
-            Box input_box               = new Box (Orientation.VERTICAL, 0);
-            Box input_content_box       = new Box (Orientation.HORIZONTAL, 0);
-            Box hashtype_box            = new Box (Orientation.VERTICAL, 0);
-            Box lasthash_box            = new Box (Orientation.VERTICAL, 0);
-            Box lasthash_content_box    = new Box (Orientation.HORIZONTAL, 0);
+            Box main_box = new Box (Orientation.HORIZONTAL, 0);
+            main_box.set_margin_bottom (12);
+            main_box.set_margin_end (12);
+            main_box.set_margin_start (12);
+            main_box.set_margin_top (12);
+            Box content_box = new Box (Orientation.VERTICAL, 0);
+            content_box.set_vexpand (true);
+            Box drag_box = new Box (Orientation.HORIZONTAL, 0);
+            Box combobox_box = new Box (Orientation.HORIZONTAL, 0);
+            Box headboard_box = new Box (Orientation.HORIZONTAL, 0);
+            Box input_fieldset_box = new Box (Orientation.HORIZONTAL, 0);
+            Box hashtype_fieldset_box = new Box (Orientation.HORIZONTAL, 0);
+            Box lasthash_fieldset_box = new Box (Orientation.HORIZONTAL, 0);
+            Box input_box = new Box (Orientation.VERTICAL, 0);
+            input_box.set_vexpand (true);
+            Box input_content_box = new Box (Orientation.HORIZONTAL, 0);
+            input_content_box.set_hexpand (true);
+            input_content_box.set_margin_end (6);
+            input_content_box.set_margin_start (6);
+            Box hashtype_box = new Box (Orientation.VERTICAL, 0);
+            hashtype_box.set_margin_top (6);
+            hashtype_box.set_margin_bottom (6);
+            Box lasthash_box = new Box (Orientation.VERTICAL, 0);
+            lasthash_box.set_margin_top (4);
+            lasthash_box.set_margin_bottom (4);
+            Box lasthash_content_box = new Box (Orientation.HORIZONTAL, 0);
+            lasthash_content_box.set_margin_top (6);
+            lasthash_content_box.set_margin_bottom (6);
             Box selection_container_box = new Box (Orientation.VERTICAL, 0);
-            Box results_stack_box       = new Box (Orientation.VERTICAL, 0);
-            Box compare_stack_box       = new Box (Orientation.VERTICAL, 0);
-            Box stack_box               = new Box (Orientation.VERTICAL, 0);
-            Box stack_switcher_box      = new Box (Orientation.HORIZONTAL, 0);
-            Box results_buttons_box     = new Box (Orientation.HORIZONTAL, 0);
-            Box textview_content_box    = new Box (Orientation.VERTICAL, 0);
-            Box textview_box            = new Box (Orientation.HORIZONTAL, 0);
-            Box compare_label_box       = new Box (Orientation.HORIZONTAL, 0);
-            Box compare_button_box      = new Box (Orientation.HORIZONTAL, 0);
-            Box compare_box             = new Box (Orientation.VERTICAL, 0);
-            Box compare_result_box      = new Box (Orientation.HORIZONTAL, 0);
-            Box result_img_box          = new Box (Orientation.HORIZONTAL, 0);
-            Box compare_state_box       = new Box (Orientation.HORIZONTAL, 4);
-            Box state_box               = new Box (Orientation.VERTICAL, 0);
-            Box state_content_box       = new Box (Orientation.HORIZONTAL, 0);
+            selection_container_box.set_margin_top (12);
+            selection_container_box.set_margin_bottom (12);
+            Box results_stack_box = new Box (Orientation.VERTICAL, 0);
+            Box compare_stack_box = new Box (Orientation.VERTICAL, 0);
+            Box stack_box = new Box (Orientation.VERTICAL, 0);
+            stack_box.set_vexpand (true);
+            Box stack_switcher_box = new Box (Orientation.HORIZONTAL, 0);
+            Box results_buttons_box = new Box (Orientation.HORIZONTAL, 0);
+            Box textview_content_box = new Box (Orientation.VERTICAL, 0);
+            textview_content_box.set_hexpand (true);
+            textview_content_box.set_vexpand (true);
+            Box textview_box = new Box (Orientation.HORIZONTAL, 0);
+            textview_box.set_hexpand (true);
+            textview_box.set_vexpand (true);
+            textview_box.set_margin_bottom (12);
+            textview_box.set_margin_end (12);
+            textview_box.set_margin_start (12);
+            textview_box.set_margin_top (12);
+            Box compare_label_box = new Box (Orientation.HORIZONTAL, 0);
+            Box compare_button_box = new Box (Orientation.HORIZONTAL, 0);
+            Box compare_box = new Box (Orientation.VERTICAL, 0);
+            compare_box.set_hexpand (true);
+            compare_box.set_vexpand (true);
+            compare_box.set_margin_bottom (12);
+            compare_box.set_margin_end (12);
+            compare_box.set_margin_start (12);
+            compare_box.set_margin_top (12);
+            Box compare_result_box = new Box (Orientation.HORIZONTAL, 0);
+            compare_result_box.set_margin_bottom (12);
+            compare_result_box.set_margin_start (12);
+            compare_result_box.set_margin_top (12);
+            Box result_img_box = new Box (Orientation.HORIZONTAL, 0);
+            result_img_box.set_margin_end (21);
+            result_img_box.set_margin_start (21);
+            Box compare_state_box = new Box (Orientation.HORIZONTAL, 4);
+            Box state_box = new Box (Orientation.VERTICAL, 0);
+            state_box.set_vexpand (true);
+            state_box.set_hexpand (true);
+            Box state_content_box = new Box (Orientation.HORIZONTAL, 0);
 
             //Labels
-            Label input_fieldset_label    = new Label ("");
+            Label input_fieldset_label = new Label ("");
             input_fieldset_label.set_markup ("<b>" + "Input File" + "</b>");
             Label hashtype_fieldset_label = new Label ("");
             hashtype_fieldset_label.set_markup ("<b>" + "Hash Type" + "</b>");
             Label lasthash_fieldset_label = new Label ("");
             lasthash_fieldset_label.set_markup ("<b>" + "Last Hash" + "</b>");
-            Label compare_result_label    = new Label ("");
+            lasthash_fieldset_label.set_margin_bottom (5);
+            lasthash_fieldset_label.set_margin_end (5);
+            lasthash_fieldset_label.set_margin_start (5);
+            lasthash_fieldset_label.set_margin_top (5);
+            Label compare_result_label = new Label ("");
             compare_result_label.set_markup ("<b>" + "Original Hash:" + "</b>");
-            Label compare_state_label     = new Label ("");
+            compare_result_label.set_margin_bottom (6);
+            compare_result_label.set_margin_end (6);
+            compare_result_label.set_margin_start (6);
+            compare_result_label.set_margin_top (6);
+            Label compare_state_label = new Label ("");
             compare_state_label.set_markup ("<span font_size='large'><b>" + "Compare State" + "</b></span>");
+            compare_state_label.set_margin_bottom (25);
+            compare_state_label.set_margin_end (25);
+            compare_state_label.set_margin_start (25);
+            compare_state_label.set_margin_top (25);
 
             //Text View
             this.text_view = new TextView ();
             this.text_view.editable = false;
             this.text_view.cursor_visible = false;
-            this.text_view.get_style_context ().add_class("text_view");
+            this.text_view.add_css_class ("text_view");
             
-            var scrolled_result = new ScrolledWindow (null, null);
+            var scrolled_result = new Gtk.ScrolledWindow ();
             scrolled_result.set_policy (PolicyType.AUTOMATIC, PolicyType.AUTOMATIC);
-            scrolled_result.add (this.text_view);
+            scrolled_result.set_child (this.text_view);
+            scrolled_result.set_hexpand (true);
+            scrolled_result.set_vexpand (true);
 
             //Buttons
-            var copy_button           = new Button.with_label (_("Copy"));
+            var copy_button = new Button.with_label (_("Copy"));
+            copy_button.set_margin_start (6);
+            copy_button.set_margin_end (6);
             var copy_clipboard_button = new Button.with_label ("Copy to Clipboard");
-            var compare_button        = new Button.with_label ("Compare");
+            var compare_button = new Button.with_label ("Compare");
+            compare_button.set_margin_bottom (4);
+            compare_button.set_margin_end (4);
+            compare_button.set_margin_start (4);
+            compare_button.set_margin_top (4);
 
             //Status Icons
             Image result_status_img = new Image ();
+            result_status_img.add_css_class (Granite.STYLE_CLASS_LARGE_ICONS);
 			try
 			{
 				var result_status_pixbuf = new Gdk.Pixbuf.from_file_at_scale ("/usr/share/hashit/gfx/result-status.svg", 24, 24, false);
-				result_status_img.set_from_pixbuf (result_status_pixbuf);
+				var result_status_texture = Gdk.Texture.for_pixbuf (result_status_pixbuf);
+                result_status_img.set_from_paintable (result_status_texture);
 			  } catch (GLib.Error e) {
 				stderr.printf ("COM.HASHIT.APP.CORE: [GLIB::ERROR CREATING PIXBUF ICON]\n");
 				stderr.printf (">>> Check file: /usr/share/hashit/gfx/result-status.svg\n");
 			}
             Image result_ok_img = new Image ();
+            result_ok_img.add_css_class (Granite.STYLE_CLASS_LARGE_ICONS);
 			try
 			{
 				var result_ok_pixbuf = new Gdk.Pixbuf.from_file_at_scale ("/usr/share/hashit/gfx/result-ok.svg", 24, 24, false);
-				result_ok_img.set_from_pixbuf (result_ok_pixbuf);
+				var result_ok_texture = Gdk.Texture.for_pixbuf (result_ok_pixbuf);
+                result_ok_img.set_from_paintable (result_ok_texture);
 			  } catch (GLib.Error e) {
 				stderr.printf ("COM.HASHIT.APP.CORE: [GLIB::ERROR CREATING PIXBUF ICON]\n");
 				stderr.printf (">>> Check file: /usr/share/hashit/gfx/result-ok.svg\n");
 			}
             Image result_error_img = new Image ();
+            result_error_img.add_css_class (Granite.STYLE_CLASS_LARGE_ICONS);
 			try
 			{
 				var result_error_pixbuf = new Gdk.Pixbuf.from_file_at_scale ("/usr/share/hashit/gfx/result-error.svg", 24, 24, false);
-				result_error_img.set_from_pixbuf (result_error_pixbuf);
+				var result_error_texture = Gdk.Texture.for_pixbuf (result_error_pixbuf);
+                result_error_img.set_from_paintable (result_error_texture);
 			  } catch (GLib.Error e) {
 				stderr.printf ("COM.HASHIT.APP.CORE: [GLIB::ERROR CREATING PIXBUF ICON]\n");
 				stderr.printf (">>> Check file: /usr/share/hashit/gfx/result-error.svg\n");
 			}
 
-            //Entrys
+            // Entrys
             var last_hash_entry = new Entry ();
+            last_hash_entry.set_hexpand (true);
+            last_hash_entry.set_margin_end (6);
+            last_hash_entry.set_margin_start (6);
             var oem_hash_entry = new Entry ();
+            oem_hash_entry.set_hexpand (true);
+            oem_hash_entry.set_margin_bottom (6);
+            oem_hash_entry.set_margin_end (6);
+            oem_hash_entry.set_margin_start (6);
+            oem_hash_entry.set_margin_top (6);
 
-            //Separators
-            Separator selection_top_separator     = new Separator (Gtk.Orientation.HORIZONTAL);
-            Separator selection_bottom_separator  = new Separator (Gtk.Orientation.HORIZONTAL);
-            Separator stack_left_separator        = new Separator (Gtk.Orientation.HORIZONTAL);
-            Separator stack_right_separator       = new Separator (Gtk.Orientation.HORIZONTAL);
-            Separator input_fieldset_separator    = new Separator (Gtk.Orientation.HORIZONTAL);
-            Separator input_fill_separator    = new Separator (Gtk.Orientation.HORIZONTAL);
+            // Separators
+            Separator selection_top_separator = new Separator (Gtk.Orientation.HORIZONTAL);
+            Separator selection_bottom_separator = new Separator (Gtk.Orientation.HORIZONTAL);
+            Separator stack_left_separator = new Separator (Gtk.Orientation.HORIZONTAL);
+            stack_left_separator.set_hexpand (true);
+            Separator stack_right_separator = new Separator (Gtk.Orientation.HORIZONTAL);
+            stack_right_separator.set_hexpand (true);
+            Separator input_fieldset_separator = new Separator (Gtk.Orientation.HORIZONTAL);
+            input_fieldset_separator.set_margin_bottom (4);
+            input_fieldset_separator.set_margin_end (4);
+            input_fieldset_separator.set_margin_start (4);
+            input_fieldset_separator.set_margin_top (4);
+            input_fieldset_separator.set_hexpand (true);
+            Separator input_fill_separator = new Separator (Gtk.Orientation.HORIZONTAL);
+            input_fill_separator.set_margin_end (6);
+            input_fill_separator.set_margin_start (6);
             Separator hashtype_fieldset_separator = new Separator (Gtk.Orientation.HORIZONTAL);
+            hashtype_fieldset_separator.set_margin_bottom (4);
+            hashtype_fieldset_separator.set_margin_end (4);
+            hashtype_fieldset_separator.set_margin_start (4);
+            hashtype_fieldset_separator.set_margin_top (4);
+            hashtype_fieldset_separator.set_size_request (24, -1);
             Separator lasthash_fieldset_separator = new Separator (Gtk.Orientation.HORIZONTAL);
+            lasthash_fieldset_separator.set_hexpand (true);
             //TextView Separators
-            Separator text_top_separator          = new Separator (Gtk.Orientation.HORIZONTAL);
-            Separator text_bottom_separator       = new Separator (Gtk.Orientation.HORIZONTAL);
-            Separator text_left_separator         = new Separator (Gtk.Orientation.VERTICAL);
-            Separator text_right_separator        = new Separator (Gtk.Orientation.VERTICAL);
+            Separator text_top_separator = new Separator (Gtk.Orientation.HORIZONTAL);
+            Separator text_bottom_separator = new Separator (Gtk.Orientation.HORIZONTAL);
+            Separator text_left_separator = new Separator (Gtk.Orientation.VERTICAL);
+            Separator text_right_separator = new Separator (Gtk.Orientation.VERTICAL);
             //Compare Button Separators
-            Separator compare_left_separator      = new Separator (Gtk.Orientation.HORIZONTAL);
-            Separator state_top_separator         = new Separator (Gtk.Orientation.VERTICAL);
-            Separator state_bottom_separator      = new Separator (Gtk.Orientation.VERTICAL);
-            Separator state_left_separator        = new Separator (Gtk.Orientation.HORIZONTAL);
-            Separator state_right_separator       = new Separator (Gtk.Orientation.HORIZONTAL);
+            Separator compare_left_separator = new Separator (Gtk.Orientation.HORIZONTAL);
+            compare_left_separator.set_hexpand (true);
+            Separator copy_left_separator = new Separator (Gtk.Orientation.HORIZONTAL);
+            copy_left_separator.set_hexpand (true);
+            Separator state_top_separator = new Separator (Gtk.Orientation.VERTICAL);
+            state_top_separator.set_vexpand (true);
+            Separator state_bottom_separator = new Separator (Gtk.Orientation.VERTICAL);
+            state_bottom_separator.set_vexpand (true);
+            Separator state_left_separator = new Separator (Gtk.Orientation.HORIZONTAL);
+            state_left_separator.set_hexpand (true);
+            Separator state_right_separator = new Separator (Gtk.Orientation.HORIZONTAL);
+            state_right_separator.set_hexpand (true);
             //Separators Properties
+            input_fieldset_separator.set_opacity (0.0);
+            hashtype_fieldset_separator.set_opacity (0.0);
+            lasthash_fieldset_separator.set_opacity (0.0);
             selection_top_separator.set_opacity (0.0);
             selection_bottom_separator.set_opacity (0.0);
             input_fill_separator.set_opacity (0.0);
             compare_left_separator.set_opacity (0.0);
+            copy_left_separator.set_opacity (0.0);
             state_top_separator.set_opacity (0.0);
             state_bottom_separator.set_opacity (0.0);
             state_left_separator.set_opacity (0.0);
             state_right_separator.set_opacity (0.0);
+            stack_left_separator.set_opacity (0.0);
+            stack_right_separator.set_opacity (0.0);
 
             //Drag And Drop area
             var drag_area = new Hashit.Widgets.DragAndDrop ();
+            drag_area.set_vexpand (true);
+            drag_area.set_hexpand (true);
+            drag_area.set_margin_bottom (12);
+            drag_area.set_margin_end (12);
+            drag_area.set_margin_start (12);
+            drag_area.set_margin_top (12);
 
             //Selection Types Box
             var selection_box = new Hashit.Widgets.Selection ();
@@ -236,13 +346,13 @@ namespace Hashit {
             var stack = new Stack ();
             stack.set_transition_type (Gtk.StackTransitionType.SLIDE_LEFT_RIGHT);
     		stack.set_transition_duration (500);
-    		stack.expand = true;
+    		stack.set_hexpand (true);
+            stack.set_vexpand (true);
             stack.add_titled (results_stack_box, "results_stack_box", "Results");
     		stack.add_titled (compare_stack_box, "compare_stack_box", "Compare");
 
             var stack_switcher = new StackSwitcher ();
             stack_switcher.set_stack (stack);
-
             
             //Temporary Function, then, delete theese block
             copy_clipboard_button.clicked.connect (() => {
@@ -250,159 +360,150 @@ namespace Hashit {
 		            stdout.printf ("%s\n", files_uris.index (i));
 	            }
 
-                stdout.printf ("Type: %s\n", selection_box.get_active_item ());
+                stdout.printf ("Type: %s\n", selection_box.get_dropdown_value ());
             });
 
             compare_button.clicked.connect (() => {
                 if (last_hash_entry.get_text ().to_string() == oem_hash_entry.get_text ().to_string())
                 {
                     result_img_box.remove (result_status_img);
-                    result_img_box.add (result_ok_img);
+                    result_img_box.prepend (result_ok_img);
                     result_ok_img.show ();
-                    compare_state_label.set_markup ("<span font_size='large' bgcolor='#80FF80'><b>     " + selection_box.get_active_item () + " Checksums match! File Integrity is OK" + "     </b></span>");
+                    compare_state_label.set_markup ("<span font_size='large' bgcolor='#80FF80'><b>     " + selection_box.get_dropdown_value () + " Checksums match! File Integrity is OK" + "     </b></span>");
                 } else {
                     result_img_box.remove (result_status_img);
-                    result_img_box.add (result_error_img);
+                    result_img_box.prepend (result_error_img);
                     result_error_img.show ();
-                    compare_state_label.set_markup ("<span font_size='large' bgcolor='#FF8080'><b>     " + selection_box.get_active_item () + " Checksums do not match! File Integrity ERROR" + "     </b></span>");
+                    compare_state_label.set_markup ("<span font_size='large' bgcolor='#FF8080'><b>     " + selection_box.get_dropdown_value () + " Checksums do not match! File Integrity ERROR" + "     </b></span>");
                 }
             });
 
             /*
-             * ARM BOXES
+             * BUILDING BOXES
              */
             //Fieldset Boxes
-            input_fieldset_box.pack_start (input_fieldset_label, false, true, 0);
-            input_fieldset_box.pack_start (input_fieldset_separator, true, true, 4);
-            hashtype_fieldset_box.pack_start (hashtype_fieldset_label, false, true, 0);
-            hashtype_fieldset_box.pack_start (hashtype_fieldset_separator, true, true, 4);
-            lasthash_fieldset_box.pack_start (lasthash_fieldset_label, false, true, 5);
-            lasthash_fieldset_box.pack_start (lasthash_fieldset_separator, true, true, 0);
+            input_fieldset_box.append (input_fieldset_label);
+            input_fieldset_box.append (input_fieldset_separator);
+            hashtype_fieldset_box.append (hashtype_fieldset_label);
+            hashtype_fieldset_box.append (hashtype_fieldset_separator);
+            lasthash_fieldset_box.append (lasthash_fieldset_label);
+            lasthash_fieldset_box.append (lasthash_fieldset_separator);
 
             //First arm the Selection_Box correctly
-            combobox_box.pack_start (selection_box, false, false, 0);
-            selection_container_box.pack_start (selection_top_separator, true, true, 0);
-            selection_container_box.pack_start (combobox_box, false, false, 0);
-            selection_container_box.pack_start (selection_bottom_separator, true, true, 0);
+            combobox_box.append (selection_box);
+            selection_container_box.append (selection_top_separator);
+            selection_container_box.append (combobox_box);
+            selection_container_box.append (selection_bottom_separator);
 
             //TextView Boxes
-            textview_content_box.pack_start (text_top_separator, false, true, 0);
-            textview_content_box.pack_start (scrolled_result, true, true, 0);
-            textview_content_box.pack_start (text_bottom_separator, false, true, 0);
-            textview_box.pack_start (text_left_separator, false, true, 0);
-            textview_box.pack_start (textview_content_box, true, true, 0);
-            textview_box.pack_start (text_right_separator, false, true, 0);
+            textview_content_box.append (text_top_separator);
+            textview_content_box.append (scrolled_result);
+            textview_content_box.append (text_bottom_separator);
+            textview_box.append (text_left_separator);
+            textview_box.append (textview_content_box);
+            textview_box.append (text_right_separator);
 
             //Compare Boxes
-            compare_label_box.pack_start (compare_result_label, false, false, 6);
-            compare_button_box.pack_start (compare_left_separator, true, true, 0);
-            compare_button_box.pack_start (compare_button, false, false, 6);
-            result_img_box.add (result_status_img);
-            compare_result_box.pack_start (oem_hash_entry, true, true, 6);
-            compare_result_box.pack_start (result_img_box, false, false, 21);
-            compare_state_box.pack_start (compare_state_label, false, true, 25);
-            state_content_box.pack_start (state_left_separator, true, false, 0);
-            state_content_box.pack_start (compare_state_box, false, false, 0);
-            state_content_box.pack_start (state_right_separator, true, false, 0);
-            state_box.pack_start (state_top_separator, true, true, 0);
-            state_box.pack_start (state_content_box, false, true, 0);
-            state_box.pack_start (state_bottom_separator, true, true, 0);
-            compare_box.pack_start (compare_label_box, false, false, 0);
-            compare_box.pack_start (compare_result_box, false, true, 12);
-            compare_box.pack_start (state_box, true, true, 0);
-            compare_box.pack_start (compare_button_box, false, false, 6);
+            compare_label_box.append (compare_result_label);
+            compare_button_box.append (compare_left_separator);
+            compare_button_box.append (compare_button);
+            result_img_box.prepend (result_status_img);
+            compare_result_box.append (oem_hash_entry);
+            compare_result_box.append (result_img_box);
+            compare_state_box.append (compare_state_label);
+            state_content_box.append (state_left_separator);
+            state_content_box.append (compare_state_box);
+            state_content_box.append (state_right_separator);
+            state_box.append (state_top_separator);
+            state_box.append (state_content_box);
+            state_box.append (state_bottom_separator);
+            compare_box.append (compare_label_box);
+            compare_box.append (compare_result_box);
+            compare_box.append (state_box);
+            compare_box.append (compare_button_box);
 
             //Then, the Stack Boxes
-            results_buttons_box.pack_end (copy_clipboard_button, false, false, 0);
-            results_stack_box.pack_start (textview_box, true, true, 12);
-            results_stack_box.pack_start (results_buttons_box, false, true, 0);
-            compare_stack_box.pack_start (compare_box, true, true, 12);
-            stack_switcher_box.pack_start (stack_left_separator, true, true, 0);
-            stack_switcher_box.pack_start (stack_switcher, false, false, 0);
-            stack_switcher_box.pack_start (stack_right_separator, true, true, 0);
-            stack_box.pack_start (stack_switcher_box, false, true, 0);
-            stack_box.pack_start (stack, false, true, 0);
+            results_buttons_box.append (copy_left_separator);
+            results_buttons_box.append (copy_clipboard_button);
+            results_stack_box.append (textview_box);
+            results_stack_box.append (results_buttons_box);
+            compare_stack_box.append (compare_box);
+            stack_switcher_box.append (stack_left_separator);
+            stack_switcher_box.append (stack_switcher);
+            stack_switcher_box.append (stack_right_separator);
+            stack_box.append (stack_switcher_box);
+            stack_box.append (stack);
 
             //Then the other boxes
-            drag_box.pack_start (drag_area, true, true, 12);
-            lasthash_content_box.pack_start (last_hash_entry, true, true, 6);
-            lasthash_content_box.pack_start (copy_button, false, false, 6);
-            input_box.pack_start (input_fieldset_box, false, true, 0);
-            input_box.pack_start (input_fill_separator, false, true, 6);
-            input_box.pack_start (drag_box, false, true, 0);
-            input_content_box.pack_start (input_box, true, true, 0);
-            hashtype_box.pack_start (hashtype_fieldset_box, false, false, 0);
-            hashtype_box.pack_start (selection_container_box, false, false, 11);
-            lasthash_box.pack_start (lasthash_fieldset_box, false, false, 0);
-            lasthash_box.pack_start (lasthash_content_box, false, false, 6);
-            headboard_box.pack_start (input_content_box, true, true, 6);
-            headboard_box.pack_start (hashtype_box, false, true, 6);
-            content_box.pack_start (headboard_box, false, true, 0);//Content Box is VERTICAL
-            content_box.pack_start (lasthash_box, false, true, 4);
-            content_box.pack_start (stack_box, true, true, 0);
-            main_box.pack_start (content_box, true, true, 0);//Main Box is HORIZONTAL
+            drag_box.append (drag_area);
+            lasthash_content_box.append (last_hash_entry);
+            lasthash_content_box.append (copy_button);
+            input_box.append (input_fieldset_box);
+            input_box.append (input_fill_separator);
+            input_box.append (drag_box);
+            input_content_box.append (input_box);
+            hashtype_box.append (hashtype_fieldset_box);
+            hashtype_box.append (selection_container_box);
+            lasthash_box.append (lasthash_fieldset_box);
+            lasthash_box.append (lasthash_content_box);
+            headboard_box.append (input_content_box);
+            headboard_box.append (hashtype_box);
+            content_box.append (headboard_box); //Content Box is VERTICAL
+            content_box.append (lasthash_box);
+            content_box.append (stack_box);
+            main_box.append (content_box); //Main Box is HORIZONTAL
 
             /*
              * ASSIGN THE DRAG ACTION TO WIDGET
              */
-            Gtk.drag_dest_set (drag_box, Gtk.DestDefaults.ALL, targets, Gdk.DragAction.COPY);
-            drag_box.drag_data_received.connect(this.on_drag_data_received);
+            var file_target = new DropTarget(typeof(File), Gdk.DragAction.COPY);
 
-    		/*
-             * Function to save settings in GSchema
-             */
-    		this.main_window.delete_event.connect (() => {
-    			int x, y;// Position variables
+            file_target.drop.connect((value, x, y) => {
+                if (value.holds(typeof(File))) {
+                    File? file = value.get_object() as File;
+                    if (file != null) {
+                        stdout.printf("Archivo recibido: %s\n", file.get_path());
+                        return true;
+                    } else {
+                        stderr.printf("No se pudo convertir el valor a File.\n");
+                    }
+                } else {
+                    stderr.printf("Tipo de valor inesperado: %s\n", value.type_name());
+                }
+                return false;
+            });
 
-    			this.main_window.get_position (out x, out y);// Get position in variables
+            drag_box.add_controller(file_target);
 
-    			// Save Values in GSCHEMA
-				settings.opening_x = x;
-    			settings.opening_y = y;
-    
-    			return false;
-			});
-
-        	this.main_window.add (main_box);
-        	this.main_window.show_all ();
+        	this.main_window.set_child (main_box);
     	}
 
     	public App () {
-    		this.set_flags (ApplicationFlags.HANDLES_OPEN);
-        	Gtk.Settings.get_default ().gtk_application_prefer_dark_theme = false;
+    		Object (
+                application_id: "com.github.libredeb.hashit",
+                flags: GLib.ApplicationFlags.HANDLES_OPEN
+            );
     	}
 
-    	public override void activate () {
-    		if (this.main_window == null)
-            	build_and_run ();
-    	}
-
-        private void on_drag_data_received (Gdk.DragContext drag_context, int x, int y,
-                                            Gtk.SelectionData data, uint info, uint time) 
-        {
-
-
-            foreach (string uri in data.get_uris ()) {
-
-                string file_path = uri.replace("file://","").replace("file:/","");
-
-                file_path = Uri.unescape_string (file_path);
-
-                files_uris.append_val (file_path);
-
-                                
-            }
-
-            list_of_hash = "";
-
-            for (int i = 0; i < files_uris.length; i++) {
-                list_of_hash += files_uris.index (i) + "\n";
-            }
-
-            this.text_view.buffer.text = list_of_hash;
-
-            Gtk.drag_finish (drag_context, true, false, time);
+        private static App app; // global App instance
+        public static App get_instance () {
+            if (app == null)
+                app = new App ();
+            return app;
         }
 
+    	protected override void activate () {
+            var granite_settings = Granite.Settings.get_default ();
+            settings = Gtk.Settings.get_default ();
+            settings.gtk_application_prefer_dark_theme = granite_settings.prefers_color_scheme == Granite.Settings.ColorScheme.DARK;
+
+            granite_settings.notify["prefers-color-scheme"].connect (() => {
+                settings.gtk_application_prefer_dark_theme = granite_settings.prefers_color_scheme == Granite.Settings.ColorScheme.DARK;
+            });
+    		if (this.main_window == null)
+            	build_and_run ();
+            
+            this.main_window.present ();
+    	}
 	}
 }

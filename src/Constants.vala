@@ -27,5 +27,5 @@ namespace Constants {
    public const string VERSION_INFO = "First release of Hashit.";
    public const string EXEC_NAME = "hashit";
    public const string APP_LAUNCHER = "hashit.desktop";
-   public const string APP_YEARS = "2012-2016";
+   public const string APP_YEARS = "2016-2025";
 }

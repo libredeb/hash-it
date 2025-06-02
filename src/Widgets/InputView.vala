@@ -26,7 +26,7 @@ namespace Hashit.Widgets {
     public class DragAndDrop : Box {
         //Global variables   
         private Label description_label;
-                 
+
         public DragAndDrop () {
             /*
              * CONTAINER BOX
@@ -36,8 +36,10 @@ namespace Hashit.Widgets {
             /*
              * SEPARATORS
              */
-            Separator left_separator  = new Separator (Gtk.Orientation.HORIZONTAL);
+            Separator left_separator = new Separator (Gtk.Orientation.HORIZONTAL);
+            left_separator.set_hexpand (true);
             Separator right_separator = new Separator (Gtk.Orientation.HORIZONTAL);
+            right_separator.set_hexpand (true);
             left_separator.set_opacity (0.0);
             right_separator.set_opacity (0.0);
 
@@ -49,13 +51,13 @@ namespace Hashit.Widgets {
             /*
              * ARM THE WIDGET
              */
-            widget_box.pack_start (left_separator, true, true, 0);
-            widget_box.pack_start (description_label, false, true, 0);
-            widget_box.pack_start (right_separator, true, true, 0);
+            widget_box.append (left_separator);
+            widget_box.append (description_label);
+            widget_box.append (right_separator);
 
             this.set_size_request (272, 26);
 
-            this.add (widget_box);
+            this.append (widget_box);
             this.homogeneous = true;
         }
     }

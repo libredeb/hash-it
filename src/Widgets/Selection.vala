@@ -24,47 +24,44 @@ using Granite;
 namespace Hashit.Widgets {
 
     public class Selection : Box {
-        //Global variables
-        private Gtk.ListStore list_types;
-		private Gtk.TreeIter item;
-        private Gtk.ComboBox list_box;
+
+        private Gtk.DropDown dropdown;
+        private string[] options;
 
         public Selection () {
             /*
-             * INITIALIZE VARIABLES
-             */
-            list_types = new Gtk.ListStore (1, typeof (string));
-
-            /*
              * Add Checksum Types
              */
-            list_types.append (out item);
-		    list_types.set (item, 0, "MD5");
-		    list_types.append (out item);
-		    list_types.set (item, 0, "SHA1");
-            list_types.append (out item);
-		    list_types.set (item, 0, "SHA256");
-		    list_types.append (out item);
-		    list_types.set (item, 0, "SHA512");
-        
-            // The ComboBox:
-		    list_box = new Gtk.ComboBox.with_model (list_types);
-		    this.pack_start (list_box, true, true, 0);
-            this.set_size_request (26, 26);
+            options = {
+                "MD5",
+                "SHA1",
+                "SHA256",
+                "SHA512"
+            };
 
-		    Gtk.CellRendererText renderer = new Gtk.CellRendererText ();
-		    list_box.pack_start (renderer, true);
-		    list_box.add_attribute (renderer, "text", 0);
-		    list_box.active = 0;
+            /*
+             * INITIALIZE VARIABLES
+             */
+            dropdown = new Gtk.DropDown.from_strings (options);
+            dropdown.selected = 0; // default index selected
+
+            // Connect the signal to a function
+            // dropdown.notify["selected"].connect (() => on_dropdown_changed (dropdown));
+
+            // The ComboBox:
+            this.append (dropdown);
+            this.set_size_request (26, 26);
         }
 
-        public string get_active_item () {
-            Value type;
+        public string on_dropdown_changed (Gtk.DropDown dropdown) {
+            var index = dropdown.selected;
+            string? selected_item = options[index];
+            return selected_item;
+        }
 
-            list_box.get_active_iter (out item);
-			list_types.get_value (item, 0, out type);
-
-            return (string) type;
+        public string get_dropdown_value () {
+            var index = dropdown.selected;
+            return options[index];
         }
 
     }

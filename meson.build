@@ -40,25 +40,21 @@ config_inc_dir = include_directories('.')
 
 ValaArgs = [
     '--pkg=config',
-    '--vapidir=' + VAPI_DIR,
-    '--target-glib=2.50',
+    '--vapidir=' + VAPI_DIR
 ]
 
 # Create a new executable, list the files we want to compile, list the dependencies we need, and install
 executable(
     meson.project_name(),
-    'src/Widgets/HeaderBar.vala',
     'src/Widgets/InputView.vala',
     'src/Widgets/Selection.vala',
     'src/Constants.vala',
     'src/Application.vala',
-    'src/Settings.vala',
     'src/Main.vala',
     dependencies: [
-        dependency('glib-2.0'),
-        dependency('gtk+-3.0'),
         dependency('gio-2.0'),
-        dependency('granite'),
+        dependency('gtk4'),
+        dependency('granite-7'),
         # Similar to add options "-X -lm" in cmake to use Math.pow()
         meson.get_compiler('c').find_library('m', required: false)
     ],
