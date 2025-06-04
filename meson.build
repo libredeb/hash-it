@@ -48,6 +48,8 @@ executable(
     meson.project_name(),
     'src/Widgets/InputView.vala',
     'src/Widgets/Selection.vala',
+    'src/Widgets/AboutDialog.vala',
+    'src/Widgets/HeaderBar.vala',
     'src/Constants.vala',
     'src/Application.vala',
     'src/Main.vala',

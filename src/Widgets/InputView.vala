@@ -1,22 +1,7 @@
-/* Copyright 2016 Juan Pablo Lozano
-*
-* This file is part of Hashit.
-*
-* Hashit is free software: you can redistribute it
-* and/or modify it under the terms of the GNU General Public License as
-* published by the Free Software Foundation, either version 3 of the
-* License, or (at your option) any later version.
-*
-* Hashit is distributed in the hope that it will be
-* useful, but WITHOUT ANY WARRANTY; without even the implied warranty of
-* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General
-* Public License for more details.
-*
-* You should have received a copy of the GNU General Public License along
-* with Hashit. If not, see http://www.gnu.org/licenses/.
-*/
-
-//Importing libraries GTK+, GLib and Granite
+/*
+ * SPDX-License-Identifier: GPL-3.0-or-later
+ * SPDX-FileCopyrightText: 2016 Juan Pablo Lozano <libredeb@gmail.com>
+ */
 using Gtk;
 using GLib;
 using Granite;

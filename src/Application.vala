@@ -10,101 +10,39 @@ using Granite;
 
 namespace Hashit {
 
-	public class App : Gtk.Application {
+    public class App : Gtk.Application {
 
-		//Global variables
-		public Window main_window;
-		public Gtk.Settings settings;
-
-        // HeaderBar
-        public Gtk.HeaderBar header_bar;
-        public Button open_button;
-		public Button save_button;
-		public Button clear_button;
+        //Global variables
+        public Window main_window;
+        public Gtk.Settings settings;
 
         private Array<string> files_uris;
         private TextView text_view;
         private string list_of_hash;
 
-		construct
-		{
-            // HeaderBar
-            this.header_bar = new Gtk.HeaderBar ();
-        	this.header_bar.add_css_class ("header_bar");
-        	this.header_bar.set_show_title_buttons (true);
-            var title = new Gtk.Label (Constants.PROGRAM_NAME);
-            this.header_bar.set_title_widget (title);
-
-            var menu_button = new Gtk.MenuButton () {
-				icon_name = "open-menu",
-				primary = true,
-				tooltip_markup = Granite.markup_accel_tooltip ({"F10"}, "Menu")
-			};
-            var menu = new Menu ();
-            menu.append ("About", "app.about");
-            var popover = new Gtk.PopoverMenu.from_model (menu);
-            menu_button.set_popover (popover);
-
-            var about_action = new SimpleAction ("about", null);
-            about_action.activate.connect (() => {
-                var about = new Gtk.AboutDialog ();
-                about.set_transient_for (this.main_window);
-                about.set_modal (true);
-                about.set_program_name (Constants.PROGRAM_NAME);
-                about.set_version (Constants.VERSION);
-                about.set_copyright (Constants.APP_YEARS);
-                about.set_logo_icon_name (Constants.EXEC_NAME);
-                about.set_license ("GPL v3");
-                about.set_license_type (Gtk.License.GPL_3_0);
-                about.set_comments ("The most intuitive and simple hash tool checker");
-                about.set_authors (
-                    {
-                        "Juan Pablo Lozano <libredeb@gmail.com>"
-                    }
-                );
-                about.set_artists (
-                    {
-                        "Ivan Matias Suarez <ivan.msuar@gmail.com>"
-                    }
-                );
-                about.set_website ("https://github.com/libredeb/hash-it");
-                about.present ();
-            });
-
-            // Agregar la acción a la ventana
-            this.add_action (about_action);
-
-            open_button = new Button.from_icon_name ("folder-open");
-            open_button.set_tooltip_text ("Open File");
-            save_button = new Button.from_icon_name ("document-save-as");
-            save_button.set_tooltip_text ("Save results to a file");
-            clear_button = new Button.from_icon_name ("edit-clear");
-            clear_button.set_tooltip_text ("Clear");
-            this.header_bar.pack_start (open_button);
-            this.header_bar.pack_start (save_button);
-            this.header_bar.pack_end (menu_button);
-            this.header_bar.pack_end (clear_button);
-    	}
-
-    	public void build_and_run () {
-    		// Initialize variables
+        public void build_and_run () {
+            // Initialize variables
             files_uris = new Array<string> ();
 
-    		/*
+            /*
              * Set up Window 
              */
-    		this.main_window = new Window ();
-        	this.main_window.set_size_request (750, 570);
-        	this.main_window.set_title (Constants.PROGRAM_NAME);
-        	this.main_window.set_icon_name (Constants.EXEC_NAME);
-        	this.main_window.set_resizable (false);
-        	this.main_window.set_application (this);
-        	this.main_window.add_css_class ("main_window");
+            this.main_window = new Window ();
+            this.main_window.set_size_request (750, 570);
+            this.main_window.set_title (Constants.PROGRAM_NAME);
+            this.main_window.set_icon_name (Constants.EXEC_NAME);
+            this.main_window.set_resizable (false);
+            this.main_window.set_application (this);
+            this.main_window.add_css_class ("main_window");
 
-        	/*
+            /*
              * Set up UI 
              */
-        	this.main_window.set_titlebar (header_bar);
+            this.main_window.set_titlebar (
+                Hashit.Widgets.build_header_bar (
+                    this.main_window, this
+                )
+            );
 
             //Boxes
             Box main_box = new Box (Orientation.HORIZONTAL, 0);
@@ -205,7 +143,7 @@ namespace Hashit {
             this.text_view.editable = false;
             this.text_view.cursor_visible = false;
             this.text_view.add_css_class ("text_view");
-            
+
             var scrolled_result = new Gtk.ScrolledWindow ();
             scrolled_result.set_policy (PolicyType.AUTOMATIC, PolicyType.AUTOMATIC);
             scrolled_result.set_child (this.text_view);
@@ -226,37 +164,40 @@ namespace Hashit {
             //Status Icons
             Image result_status_img = new Image ();
             result_status_img.add_css_class (Granite.STYLE_CLASS_LARGE_ICONS);
-			try
-			{
-				var result_status_pixbuf = new Gdk.Pixbuf.from_file_at_scale ("/usr/share/hashit/gfx/result-status.svg", 24, 24, false);
-				var result_status_texture = Gdk.Texture.for_pixbuf (result_status_pixbuf);
+            try {
+                var result_status_pixbuf = new Gdk.Pixbuf.from_file_at_scale (
+                    "/usr/share/hashit/gfx/result-status.svg", 24, 24, false
+                );
+                var result_status_texture = Gdk.Texture.for_pixbuf (result_status_pixbuf);
                 result_status_img.set_from_paintable (result_status_texture);
-			  } catch (GLib.Error e) {
-				stderr.printf ("COM.HASHIT.APP.CORE: [GLIB::ERROR CREATING PIXBUF ICON]\n");
-				stderr.printf (">>> Check file: /usr/share/hashit/gfx/result-status.svg\n");
-			}
+            } catch (GLib.Error e) {
+                warning ("Error creating pixbuf icon for status image");
+                warning ("Check file /usr/share/hashit/gfx/result-status.svg");
+            }
             Image result_ok_img = new Image ();
             result_ok_img.add_css_class (Granite.STYLE_CLASS_LARGE_ICONS);
-			try
-			{
-				var result_ok_pixbuf = new Gdk.Pixbuf.from_file_at_scale ("/usr/share/hashit/gfx/result-ok.svg", 24, 24, false);
-				var result_ok_texture = Gdk.Texture.for_pixbuf (result_ok_pixbuf);
+            try {
+                var result_ok_pixbuf = new Gdk.Pixbuf.from_file_at_scale (
+                    "/usr/share/hashit/gfx/result-ok.svg", 24, 24, false
+                );
+                var result_ok_texture = Gdk.Texture.for_pixbuf (result_ok_pixbuf);
                 result_ok_img.set_from_paintable (result_ok_texture);
-			  } catch (GLib.Error e) {
-				stderr.printf ("COM.HASHIT.APP.CORE: [GLIB::ERROR CREATING PIXBUF ICON]\n");
-				stderr.printf (">>> Check file: /usr/share/hashit/gfx/result-ok.svg\n");
-			}
+            } catch (GLib.Error e) {
+                warning ("Error creating pixbuf icon for status_ok image");
+                warning ("Check file /usr/share/hashit/gfx/result-ok.svg");
+            }
             Image result_error_img = new Image ();
             result_error_img.add_css_class (Granite.STYLE_CLASS_LARGE_ICONS);
-			try
-			{
-				var result_error_pixbuf = new Gdk.Pixbuf.from_file_at_scale ("/usr/share/hashit/gfx/result-error.svg", 24, 24, false);
-				var result_error_texture = Gdk.Texture.for_pixbuf (result_error_pixbuf);
+            try {
+                var result_error_pixbuf = new Gdk.Pixbuf.from_file_at_scale (
+                    "/usr/share/hashit/gfx/result-error.svg", 24, 24, false
+                );
+                var result_error_texture = Gdk.Texture.for_pixbuf (result_error_pixbuf);
                 result_error_img.set_from_paintable (result_error_texture);
-			  } catch (GLib.Error e) {
-				stderr.printf ("COM.HASHIT.APP.CORE: [GLIB::ERROR CREATING PIXBUF ICON]\n");
-				stderr.printf (">>> Check file: /usr/share/hashit/gfx/result-error.svg\n");
-			}
+            } catch (GLib.Error e) {
+                warning ("Error creating pixbuf icon for status_error image");
+                warning ("Check file /usr/share/hashit/gfx/result-error.svg");
+            }
 
             // Entrys
             var last_hash_entry = new Entry ();
@@ -345,36 +286,43 @@ namespace Hashit {
              */
             var stack = new Stack ();
             stack.set_transition_type (Gtk.StackTransitionType.SLIDE_LEFT_RIGHT);
-    		stack.set_transition_duration (500);
-    		stack.set_hexpand (true);
+            stack.set_transition_duration (500);
+            stack.set_hexpand (true);
             stack.set_vexpand (true);
             stack.add_titled (results_stack_box, "results_stack_box", "Results");
-    		stack.add_titled (compare_stack_box, "compare_stack_box", "Compare");
+            stack.add_titled (compare_stack_box, "compare_stack_box", "Compare");
 
             var stack_switcher = new StackSwitcher ();
             stack_switcher.set_stack (stack);
-            
+
             //Temporary Function, then, delete theese block
             copy_clipboard_button.clicked.connect (() => {
                 for (int i = 0; i < files_uris.length; i++) {
-		            stdout.printf ("%s\n", files_uris.index (i));
-	            }
+                    message (files_uris.index (i));
+                }
 
-                stdout.printf ("Type: %s\n", selection_box.get_dropdown_value ());
+                message ("Type: %s", selection_box.get_dropdown_value ());
             });
 
             compare_button.clicked.connect (() => {
-                if (last_hash_entry.get_text ().to_string() == oem_hash_entry.get_text ().to_string())
-                {
+                if (last_hash_entry.get_text ().to_string () == oem_hash_entry.get_text ().to_string ()) {
                     result_img_box.remove (result_status_img);
                     result_img_box.prepend (result_ok_img);
                     result_ok_img.show ();
-                    compare_state_label.set_markup ("<span font_size='large' bgcolor='#80FF80'><b>     " + selection_box.get_dropdown_value () + " Checksums match! File Integrity is OK" + "     </b></span>");
+                    compare_state_label.set_markup (
+                        "<span font_size='large' bgcolor='#80FF80'><b>     "
+                        + selection_box.get_dropdown_value ()
+                        + " Checksums match! File Integrity is OK" + "     </b></span>"
+                    );
                 } else {
                     result_img_box.remove (result_status_img);
                     result_img_box.prepend (result_error_img);
                     result_error_img.show ();
-                    compare_state_label.set_markup ("<span font_size='large' bgcolor='#FF8080'><b>     " + selection_box.get_dropdown_value () + " Checksums do not match! File Integrity ERROR" + "     </b></span>");
+                    compare_state_label.set_markup (
+                        "<span font_size='large' bgcolor='#FF8080'><b>     "
+                        + selection_box.get_dropdown_value ()
+                        + " Checksums do not match! File Integrity ERROR" + "     </b></span>"
+                    );
                 }
             });
 
@@ -456,34 +404,34 @@ namespace Hashit {
             /*
              * ASSIGN THE DRAG ACTION TO WIDGET
              */
-            var file_target = new DropTarget(typeof(File), Gdk.DragAction.COPY);
+            var file_target = new DropTarget (typeof (File), Gdk.DragAction.COPY);
 
-            file_target.drop.connect((value, x, y) => {
-                if (value.holds(typeof(File))) {
-                    File? file = value.get_object() as File;
+            file_target.drop.connect ((value, x, y) => {
+                if (value.holds (typeof (File))) {
+                    File? file = value.get_object () as File;
                     if (file != null) {
-                        stdout.printf("Archivo recibido: %s\n", file.get_path());
+                        message ("File received %s", file.get_path ());
                         return true;
                     } else {
-                        stderr.printf("No se pudo convertir el valor a File.\n");
+                        message ("Could not get the path to the file");
                     }
                 } else {
-                    stderr.printf("Tipo de valor inesperado: %s\n", value.type_name());
+                    message ("File type is not recognized %s", value.type_name ());
                 }
                 return false;
             });
 
-            drag_box.add_controller(file_target);
+            drag_box.add_controller (file_target);
 
-        	this.main_window.set_child (main_box);
-    	}
+            this.main_window.set_child (main_box);
+        }
 
-    	public App () {
-    		Object (
+        public App () {
+            Object (
                 application_id: "com.github.libredeb.hashit",
                 flags: GLib.ApplicationFlags.HANDLES_OPEN
             );
-    	}
+        }
 
         private static App app; // global App instance
         public static App get_instance () {
@@ -492,18 +440,20 @@ namespace Hashit {
             return app;
         }
 
-    	protected override void activate () {
+        protected override void activate () {
             var granite_settings = Granite.Settings.get_default ();
             settings = Gtk.Settings.get_default ();
-            settings.gtk_application_prefer_dark_theme = granite_settings.prefers_color_scheme == Granite.Settings.ColorScheme.DARK;
+            if (granite_settings.prefers_color_scheme == Granite.Settings.ColorScheme.DARK)
+                settings.gtk_application_prefer_dark_theme = true;
 
             granite_settings.notify["prefers-color-scheme"].connect (() => {
-                settings.gtk_application_prefer_dark_theme = granite_settings.prefers_color_scheme == Granite.Settings.ColorScheme.DARK;
+                if (granite_settings.prefers_color_scheme == Granite.Settings.ColorScheme.DARK)
+                    settings.gtk_application_prefer_dark_theme = true;
             });
-    		if (this.main_window == null)
-            	build_and_run ();
-            
+            if (this.main_window == null)
+                build_and_run ();
+
             this.main_window.present ();
-    	}
-	}
+        }
+    }
 }
