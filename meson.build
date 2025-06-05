@@ -50,6 +50,7 @@ executable(
     'src/Widgets/Selection.vala',
     'src/Widgets/AboutDialog.vala',
     'src/Widgets/HeaderBar.vala',
+    'src/Backend/Checksum.vala',
     'src/Constants.vala',
     'src/Application.vala',
     'src/Main.vala',

@@ -18,6 +18,7 @@ namespace Hashit {
 
         private Array<string> files_uris;
         private TextView text_view;
+        private TextBuffer text_view_buffer;
         private string list_of_hash;
 
         public void build_and_run () {
@@ -143,6 +144,7 @@ namespace Hashit {
             this.text_view.editable = false;
             this.text_view.cursor_visible = false;
             this.text_view.add_css_class ("text_view");
+            this.text_view_buffer = this.text_view.get_buffer ();
 
             var scrolled_result = new Gtk.ScrolledWindow ();
             scrolled_result.set_policy (PolicyType.AUTOMATIC, PolicyType.AUTOMATIC);
@@ -410,7 +412,25 @@ namespace Hashit {
                 if (value.holds (typeof (File))) {
                     File? file = value.get_object () as File;
                     if (file != null) {
-                        message ("File received %s", file.get_path ());
+                        files_uris.append_val (file.get_path ());
+
+                        string hash = Hashit.Backend.Checksum.calculate_hash (
+                            selection_box.get_dropdown_value (),
+                            file.get_path ()
+                        );
+                        last_hash_entry.set_text (hash);
+
+                        TextIter text_end_iter;
+                        this.text_view_buffer.get_end_iter (out text_end_iter);
+
+                        // Insertar el mensaje en el buffer en la posición del iterador
+                        string iter_text = hash + "  " + file.get_basename () + "\n";
+                        this.text_view_buffer.insert(
+                            ref text_end_iter, iter_text, iter_text.length
+                        );
+
+                        // Desplazarse automáticamente al final del texto
+                        this.text_view.scroll_to_iter(text_end_iter, 0.0, false, 0.0, 0.0);
                         return true;
                     } else {
                         message ("Could not get the path to the file");
