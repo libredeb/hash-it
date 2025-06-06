@@ -19,7 +19,7 @@ namespace Hashit {
         private Array<string> files_uris;
         private TextView text_view;
         private TextBuffer text_view_buffer;
-        private string list_of_hash;
+        private ResultState result_flag = ResultState.NONE;
 
         public void build_and_run () {
             // Initialize variables
@@ -308,24 +308,47 @@ namespace Hashit {
 
             compare_button.clicked.connect (() => {
                 if (last_hash_entry.get_text ().to_string () == oem_hash_entry.get_text ().to_string ()) {
-                    result_img_box.remove (result_status_img);
-                    result_img_box.prepend (result_ok_img);
-                    result_ok_img.show ();
+                    switch (result_flag) {
+                        case ResultState.NONE:   
+                            result_img_box.remove (result_status_img);
+                            break;
+                        case ResultState.ERROR:
+                            result_img_box.remove (result_error_img);
+                            break;
+                        case ResultState.OK:
+                            return;
+                    }
+
+                    result_flag = ResultState.OK;
+                    result_img_box.append (result_ok_img);
+
                     compare_state_label.set_markup (
-                        "<span font_size='large' bgcolor='#80FF80'><b>     "
+                        "<span font_size='large' fgcolor='#000' bgcolor='#80FF80'><b>     "
                         + selection_box.get_dropdown_value ()
                         + " Checksums match! File Integrity is OK" + "     </b></span>"
                     );
                 } else {
-                    result_img_box.remove (result_status_img);
-                    result_img_box.prepend (result_error_img);
-                    result_error_img.show ();
+                    switch (result_flag) {
+                        case ResultState.NONE:
+                            result_img_box.remove (result_status_img);
+                            break;
+                        case ResultState.OK:
+                            result_img_box.remove (result_ok_img);
+                            break;
+                        case ResultState.ERROR:
+                            return;
+                    }
+
+                    result_flag = ResultState.ERROR;
+                    result_img_box.append (result_error_img);
+
                     compare_state_label.set_markup (
-                        "<span font_size='large' bgcolor='#FF8080'><b>     "
+                        "<span font_size='large' fgcolor='#000' bgcolor='#FF8080'><b>     "
                         + selection_box.get_dropdown_value ()
                         + " Checksums do not match! File Integrity ERROR" + "     </b></span>"
                     );
                 }
+                result_img_box.queue_draw ();
             });
 
             /*
@@ -357,7 +380,7 @@ namespace Hashit {
             compare_label_box.append (compare_result_label);
             compare_button_box.append (compare_left_separator);
             compare_button_box.append (compare_button);
-            result_img_box.prepend (result_status_img);
+            result_img_box.append (result_status_img);
             compare_result_box.append (oem_hash_entry);
             compare_result_box.append (result_img_box);
             compare_state_box.append (compare_state_label);

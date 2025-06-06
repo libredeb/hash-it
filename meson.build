@@ -51,6 +51,7 @@ executable(
     'src/Widgets/AboutDialog.vala',
     'src/Widgets/HeaderBar.vala',
     'src/Backend/Checksum.vala',
+    'src/Backend/ResultState.vala',
     'src/Constants.vala',
     'src/Application.vala',
     'src/Main.vala',
@@ -67,12 +68,6 @@ executable(
     vala_args: ValaArgs,
     include_directories: config_inc_dir,
     install: true
-)
-
-# Install CSS file
-install_data(
-    join_paths('data', 'gtk-widgets.css'),
-    install_dir: join_paths(datadir, PROJECT_NAME, 'ui')
 )
 
 # Install app icons
