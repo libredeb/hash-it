@@ -45,6 +45,18 @@ namespace Hashit.Widgets {
         header_bar.pack_end (menu_button);
         header_bar.pack_end (clear_button);
 
+        // Buttons functions
+        open_button.clicked.connect (() => {
+            Hashit.Widgets.FileDialog.select_file.begin (parent, (path) => {
+                if (path != null) {
+                    stdout.printf ("Selected file: %s\n", path);
+                    ((Hashit.App)app).last_hash_entry.set_text (path);
+                } else {
+                    stdout.printf ("No file was selected.\n");
+                }
+            });
+        });
+
         return header_bar;
     }
 }

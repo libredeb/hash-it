@@ -12,9 +12,3 @@ if not os.environ.get('DESTDIR'):
         print('Done')
     else: 
         print('Error')
-    
-    print('Updating GLib Schemas...')
-    if subprocess.call(['glib-compile-schemas', schemas]) == 0:
-        print('Done')
-    else: 
-        print('Error')

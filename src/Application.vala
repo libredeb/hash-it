@@ -14,7 +14,11 @@ namespace Hashit {
 
         //Global variables
         public Window main_window;
+        public Adw.ToastOverlay toast_overlay;
         public Gtk.Settings settings;
+        public Gtk.HeaderBar headerbar;
+
+        public Gtk.Entry last_hash_entry;
 
         private Array<string> files_uris;
         private TextView text_view;
@@ -34,16 +38,16 @@ namespace Hashit {
             this.main_window.set_icon_name (Constants.EXEC_NAME);
             this.main_window.set_resizable (false);
             this.main_window.set_application (this);
-            this.main_window.add_css_class ("main_window");
+
+            this.toast_overlay = new Adw.ToastOverlay ();
 
             /*
              * Set up UI 
              */
-            this.main_window.set_titlebar (
-                Hashit.Widgets.build_header_bar (
-                    this.main_window, this
-                )
+            this.headerbar = Hashit.Widgets.build_header_bar (
+                this.main_window, this
             );
+            this.main_window.set_titlebar (this.headerbar);
 
             //Boxes
             Box main_box = new Box (Orientation.HORIZONTAL, 0);
@@ -117,23 +121,25 @@ namespace Hashit {
 
             //Labels
             Label input_fieldset_label = new Label ("");
-            input_fieldset_label.set_markup ("<b>" + "Input File" + "</b>");
+            input_fieldset_label.set_markup ("<b>" + _("Input File") + "</b>");
             Label hashtype_fieldset_label = new Label ("");
-            hashtype_fieldset_label.set_markup ("<b>" + "Hash Type" + "</b>");
+            hashtype_fieldset_label.set_markup ("<b>" + _("Hash Type") + "</b>");
             Label lasthash_fieldset_label = new Label ("");
-            lasthash_fieldset_label.set_markup ("<b>" + "Last Hash" + "</b>");
+            lasthash_fieldset_label.set_markup ("<b>" + _("Last Hash") + "</b>");
             lasthash_fieldset_label.set_margin_bottom (5);
             lasthash_fieldset_label.set_margin_end (5);
             lasthash_fieldset_label.set_margin_start (5);
             lasthash_fieldset_label.set_margin_top (5);
             Label compare_result_label = new Label ("");
-            compare_result_label.set_markup ("<b>" + "Original Hash:" + "</b>");
+            compare_result_label.set_markup ("<b>" + _("Original Hash:") + "</b>");
             compare_result_label.set_margin_bottom (6);
             compare_result_label.set_margin_end (6);
             compare_result_label.set_margin_start (6);
             compare_result_label.set_margin_top (6);
             Label compare_state_label = new Label ("");
-            compare_state_label.set_markup ("<span font_size='large'><b>" + "Compare State" + "</b></span>");
+            compare_state_label.set_markup (
+                "<span font_size='large'><b>" + _("Compare State") + "</b></span>"
+            );
             compare_state_label.set_margin_bottom (25);
             compare_state_label.set_margin_end (25);
             compare_state_label.set_margin_start (25);
@@ -143,7 +149,6 @@ namespace Hashit {
             this.text_view = new TextView ();
             this.text_view.editable = false;
             this.text_view.cursor_visible = false;
-            this.text_view.add_css_class ("text_view");
             this.text_view_buffer = this.text_view.get_buffer ();
 
             var scrolled_result = new Gtk.ScrolledWindow ();
@@ -156,8 +161,8 @@ namespace Hashit {
             var copy_button = new Button.with_label (_("Copy"));
             copy_button.set_margin_start (6);
             copy_button.set_margin_end (6);
-            var copy_clipboard_button = new Button.with_label ("Copy to Clipboard");
-            var compare_button = new Button.with_label ("Compare");
+            var copy_history_button = new Button.with_label (_("Copy History"));
+            var compare_button = new Button.with_label (_("Compare"));
             compare_button.set_margin_bottom (4);
             compare_button.set_margin_end (4);
             compare_button.set_margin_start (4);
@@ -202,7 +207,7 @@ namespace Hashit {
             }
 
             // Entrys
-            var last_hash_entry = new Entry ();
+            last_hash_entry = new Entry ();
             last_hash_entry.set_hexpand (true);
             last_hash_entry.set_margin_end (6);
             last_hash_entry.set_margin_start (6);
@@ -237,11 +242,13 @@ namespace Hashit {
             hashtype_fieldset_separator.set_size_request (24, -1);
             Separator lasthash_fieldset_separator = new Separator (Gtk.Orientation.HORIZONTAL);
             lasthash_fieldset_separator.set_hexpand (true);
+
             //TextView Separators
             Separator text_top_separator = new Separator (Gtk.Orientation.HORIZONTAL);
             Separator text_bottom_separator = new Separator (Gtk.Orientation.HORIZONTAL);
             Separator text_left_separator = new Separator (Gtk.Orientation.VERTICAL);
             Separator text_right_separator = new Separator (Gtk.Orientation.VERTICAL);
+
             //Compare Button Separators
             Separator compare_left_separator = new Separator (Gtk.Orientation.HORIZONTAL);
             compare_left_separator.set_hexpand (true);
@@ -255,6 +262,7 @@ namespace Hashit {
             state_left_separator.set_hexpand (true);
             Separator state_right_separator = new Separator (Gtk.Orientation.HORIZONTAL);
             state_right_separator.set_hexpand (true);
+
             //Separators Properties
             input_fieldset_separator.set_opacity (0.0);
             hashtype_fieldset_separator.set_opacity (0.0);
@@ -291,25 +299,16 @@ namespace Hashit {
             stack.set_transition_duration (500);
             stack.set_hexpand (true);
             stack.set_vexpand (true);
-            stack.add_titled (results_stack_box, "results_stack_box", "Results");
-            stack.add_titled (compare_stack_box, "compare_stack_box", "Compare");
+            stack.add_titled (results_stack_box, "results_stack_box", _("Results"));
+            stack.add_titled (compare_stack_box, "compare_stack_box", _("Compare"));
 
             var stack_switcher = new StackSwitcher ();
             stack_switcher.set_stack (stack);
 
-            //Temporary Function, then, delete theese block
-            copy_clipboard_button.clicked.connect (() => {
-                for (int i = 0; i < files_uris.length; i++) {
-                    message (files_uris.index (i));
-                }
-
-                message ("Type: %s", selection_box.get_dropdown_value ());
-            });
-
             compare_button.clicked.connect (() => {
                 if (last_hash_entry.get_text ().to_string () == oem_hash_entry.get_text ().to_string ()) {
                     switch (result_flag) {
-                        case ResultState.NONE:   
+                        case ResultState.NONE:
                             result_img_box.remove (result_status_img);
                             break;
                         case ResultState.ERROR:
@@ -325,7 +324,7 @@ namespace Hashit {
                     compare_state_label.set_markup (
                         "<span font_size='large' fgcolor='#000' bgcolor='#80FF80'><b>     "
                         + selection_box.get_dropdown_value ()
-                        + " Checksums match! File Integrity is OK" + "     </b></span>"
+                        + _("Checksums match! File Integrity is OK") + "     </b></span>"
                     );
                 } else {
                     switch (result_flag) {
@@ -345,7 +344,7 @@ namespace Hashit {
                     compare_state_label.set_markup (
                         "<span font_size='large' fgcolor='#000' bgcolor='#FF8080'><b>     "
                         + selection_box.get_dropdown_value ()
-                        + " Checksums do not match! File Integrity ERROR" + "     </b></span>"
+                        + _("Checksums do not match! File Integrity ERROR") + "     </b></span>"
                     );
                 }
                 result_img_box.queue_draw ();
@@ -397,7 +396,7 @@ namespace Hashit {
 
             //Then, the Stack Boxes
             results_buttons_box.append (copy_left_separator);
-            results_buttons_box.append (copy_clipboard_button);
+            results_buttons_box.append (copy_history_button);
             results_stack_box.append (textview_box);
             results_stack_box.append (results_buttons_box);
             compare_stack_box.append (compare_box);
@@ -446,14 +445,12 @@ namespace Hashit {
                         TextIter text_end_iter;
                         this.text_view_buffer.get_end_iter (out text_end_iter);
 
-                        // Insertar el mensaje en el buffer en la posición del iterador
                         string iter_text = hash + "  " + file.get_basename () + "\n";
-                        this.text_view_buffer.insert(
+                        this.text_view_buffer.insert (
                             ref text_end_iter, iter_text, iter_text.length
                         );
 
-                        // Desplazarse automáticamente al final del texto
-                        this.text_view.scroll_to_iter(text_end_iter, 0.0, false, 0.0, 0.0);
+                        this.text_view.scroll_to_iter (text_end_iter, 0.0, false, 0.0, 0.0);
                         return true;
                     } else {
                         message ("Could not get the path to the file");
@@ -463,10 +460,36 @@ namespace Hashit {
                 }
                 return false;
             });
-
             drag_box.add_controller (file_target);
 
-            this.main_window.set_child (main_box);
+            copy_button.clicked.connect (() => {
+                var display = this.main_window.get_display ();
+                var clipboard = display.get_clipboard ();
+                clipboard.set_text (last_hash_entry.get_text ());
+
+                var toast = new Adw.Toast ("Hash successfully copied");
+                toast.set_timeout (2);
+                this.toast_overlay.add_toast (toast);
+            });
+
+            copy_history_button.clicked.connect (() => {
+                var display = this.main_window.get_display ();
+                var clipboard = display.get_clipboard ();
+
+                Gtk.TextBuffer buffer = this.text_view.get_buffer ();
+                Gtk.TextIter start, end;
+                buffer.get_bounds (out start, out end);
+
+                string text_view_content = buffer.get_text (start, end, false);
+                clipboard.set_text (text_view_content);
+
+                var toast = new Adw.Toast ("History successfully copied");
+                toast.set_timeout (2);
+                this.toast_overlay.add_toast (toast);
+            });
+
+            this.toast_overlay.set_child (main_box);
+            this.main_window.set_child (this.toast_overlay);
         }
 
         public App () {

@@ -50,6 +50,7 @@ executable(
     'src/Widgets/Selection.vala',
     'src/Widgets/AboutDialog.vala',
     'src/Widgets/HeaderBar.vala',
+    'src/Widgets/FileDialog.vala',
     'src/Backend/Checksum.vala',
     'src/Backend/ResultState.vala',
     'src/Constants.vala',
@@ -59,6 +60,7 @@ executable(
         dependency('gio-2.0'),
         dependency('gtk4'),
         dependency('granite-7'),
+        dependency('libadwaita-1'),
         # Similar to add options "-X -lm" in cmake to use Math.pow()
         meson.get_compiler('c').find_library('m', required: false)
     ],
