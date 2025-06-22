@@ -49,6 +49,10 @@ namespace Hashit.Widgets {
             return options[index];
         }
 
+        public void reset_to_default () {
+            dropdown.selected = 0; // Reset to default index (MD5)
+        }
+
     }
 
 }

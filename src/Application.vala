@@ -19,11 +19,18 @@ namespace Hashit {
         public Gtk.HeaderBar headerbar;
 
         public Gtk.Entry last_hash_entry;
+        public Hashit.Widgets.Selection selection_box;
 
-        private Array<string> files_uris;
-        private TextView text_view;
-        private TextBuffer text_view_buffer;
-        private ResultState result_flag = ResultState.NONE;
+        public Array<string> files_uris;
+        public TextView text_view;
+        public TextBuffer text_view_buffer;
+        public ResultState result_flag = ResultState.NONE;
+        
+        // Compare tab elements
+        private Gtk.Entry oem_hash_entry;
+        private Gtk.Label compare_state_label;
+        private Gtk.Box result_img_box;
+        private Gtk.Image result_status_img;
 
         public void build_and_run () {
             // Initialize variables
@@ -110,9 +117,9 @@ namespace Hashit {
             compare_result_box.set_margin_bottom (12);
             compare_result_box.set_margin_start (12);
             compare_result_box.set_margin_top (12);
-            Box result_img_box = new Box (Orientation.HORIZONTAL, 0);
-            result_img_box.set_margin_end (21);
-            result_img_box.set_margin_start (21);
+            this.result_img_box = new Box (Orientation.HORIZONTAL, 0);
+            this.result_img_box.set_margin_end (21);
+            this.result_img_box.set_margin_start (21);
             Box compare_state_box = new Box (Orientation.HORIZONTAL, 4);
             Box state_box = new Box (Orientation.VERTICAL, 0);
             state_box.set_vexpand (true);
@@ -136,14 +143,14 @@ namespace Hashit {
             compare_result_label.set_margin_end (6);
             compare_result_label.set_margin_start (6);
             compare_result_label.set_margin_top (6);
-            Label compare_state_label = new Label ("");
-            compare_state_label.set_markup (
+            this.compare_state_label = new Label ("");
+            this.compare_state_label.set_markup (
                 "<span font_size='large'><b>" + _("Compare State") + "</b></span>"
             );
-            compare_state_label.set_margin_bottom (25);
-            compare_state_label.set_margin_end (25);
-            compare_state_label.set_margin_start (25);
-            compare_state_label.set_margin_top (25);
+            this.compare_state_label.set_margin_bottom (25);
+            this.compare_state_label.set_margin_end (25);
+            this.compare_state_label.set_margin_start (25);
+            this.compare_state_label.set_margin_top (25);
 
             //Text View
             this.text_view = new TextView ();
@@ -169,14 +176,14 @@ namespace Hashit {
             compare_button.set_margin_top (4);
 
             //Status Icons
-            Image result_status_img = new Image ();
-            result_status_img.add_css_class (Granite.STYLE_CLASS_LARGE_ICONS);
+            this.result_status_img = new Image ();
+            this.result_status_img.add_css_class (Granite.STYLE_CLASS_LARGE_ICONS);
             try {
                 var result_status_pixbuf = new Gdk.Pixbuf.from_file_at_scale (
                     "/usr/share/hashit/gfx/result-status.svg", 24, 24, false
                 );
                 var result_status_texture = Gdk.Texture.for_pixbuf (result_status_pixbuf);
-                result_status_img.set_from_paintable (result_status_texture);
+                this.result_status_img.set_from_paintable (result_status_texture);
             } catch (GLib.Error e) {
                 warning ("Error creating pixbuf icon for status image");
                 warning ("Check file /usr/share/hashit/gfx/result-status.svg");
@@ -211,12 +218,12 @@ namespace Hashit {
             last_hash_entry.set_hexpand (true);
             last_hash_entry.set_margin_end (6);
             last_hash_entry.set_margin_start (6);
-            var oem_hash_entry = new Entry ();
-            oem_hash_entry.set_hexpand (true);
-            oem_hash_entry.set_margin_bottom (6);
-            oem_hash_entry.set_margin_end (6);
-            oem_hash_entry.set_margin_start (6);
-            oem_hash_entry.set_margin_top (6);
+            this.oem_hash_entry = new Entry ();
+            this.oem_hash_entry.set_hexpand (true);
+            this.oem_hash_entry.set_margin_bottom (6);
+            this.oem_hash_entry.set_margin_end (6);
+            this.oem_hash_entry.set_margin_start (6);
+            this.oem_hash_entry.set_margin_top (6);
 
             // Separators
             Separator selection_top_separator = new Separator (Gtk.Orientation.HORIZONTAL);
@@ -289,7 +296,7 @@ namespace Hashit {
             drag_area.set_margin_top (12);
 
             //Selection Types Box
-            var selection_box = new Hashit.Widgets.Selection ();
+            selection_box = new Hashit.Widgets.Selection ();
 
             /*
              * Stack
@@ -306,22 +313,22 @@ namespace Hashit {
             stack_switcher.set_stack (stack);
 
             compare_button.clicked.connect (() => {
-                if (last_hash_entry.get_text ().to_string () == oem_hash_entry.get_text ().to_string ()) {
+                if (last_hash_entry.get_text ().to_string () == this.oem_hash_entry.get_text ().to_string ()) {
                     switch (result_flag) {
                         case ResultState.NONE:
-                            result_img_box.remove (result_status_img);
+                            this.result_img_box.remove (this.result_status_img);
                             break;
                         case ResultState.ERROR:
-                            result_img_box.remove (result_error_img);
+                            this.result_img_box.remove (result_error_img);
                             break;
                         case ResultState.OK:
                             return;
                     }
 
                     result_flag = ResultState.OK;
-                    result_img_box.append (result_ok_img);
+                    this.result_img_box.append (result_ok_img);
 
-                    compare_state_label.set_markup (
+                    this.compare_state_label.set_markup (
                         "<span font_size='large' fgcolor='#000' bgcolor='#80FF80'><b>     "
                         + selection_box.get_dropdown_value ()
                         + _("Checksums match! File Integrity is OK") + "     </b></span>"
@@ -329,25 +336,25 @@ namespace Hashit {
                 } else {
                     switch (result_flag) {
                         case ResultState.NONE:
-                            result_img_box.remove (result_status_img);
+                            this.result_img_box.remove (this.result_status_img);
                             break;
                         case ResultState.OK:
-                            result_img_box.remove (result_ok_img);
+                            this.result_img_box.remove (result_ok_img);
                             break;
                         case ResultState.ERROR:
                             return;
                     }
 
                     result_flag = ResultState.ERROR;
-                    result_img_box.append (result_error_img);
+                    this.result_img_box.append (result_error_img);
 
-                    compare_state_label.set_markup (
+                    this.compare_state_label.set_markup (
                         "<span font_size='large' fgcolor='#000' bgcolor='#FF8080'><b>     "
                         + selection_box.get_dropdown_value ()
                         + _("Checksums do not match! File Integrity ERROR") + "     </b></span>"
                     );
                 }
-                result_img_box.queue_draw ();
+                this.result_img_box.queue_draw ();
             });
 
             /*
@@ -379,10 +386,10 @@ namespace Hashit {
             compare_label_box.append (compare_result_label);
             compare_button_box.append (compare_left_separator);
             compare_button_box.append (compare_button);
-            result_img_box.append (result_status_img);
-            compare_result_box.append (oem_hash_entry);
-            compare_result_box.append (result_img_box);
-            compare_state_box.append (compare_state_label);
+            this.result_img_box.append (this.result_status_img);
+            compare_result_box.append (this.oem_hash_entry);
+            compare_result_box.append (this.result_img_box);
+            compare_state_box.append (this.compare_state_label);
             state_content_box.append (state_left_separator);
             state_content_box.append (compare_state_box);
             state_content_box.append (state_right_separator);
@@ -434,23 +441,7 @@ namespace Hashit {
                 if (value.holds (typeof (File))) {
                     File? file = value.get_object () as File;
                     if (file != null) {
-                        files_uris.append_val (file.get_path ());
-
-                        string hash = Hashit.Backend.Checksum.calculate_hash (
-                            selection_box.get_dropdown_value (),
-                            file.get_path ()
-                        );
-                        last_hash_entry.set_text (hash);
-
-                        TextIter text_end_iter;
-                        this.text_view_buffer.get_end_iter (out text_end_iter);
-
-                        string iter_text = hash + "  " + file.get_basename () + "\n";
-                        this.text_view_buffer.insert (
-                            ref text_end_iter, iter_text, iter_text.length
-                        );
-
-                        this.text_view.scroll_to_iter (text_end_iter, 0.0, false, 0.0, 0.0);
+                        this.get_file_hash (file.get_path ());
                         return true;
                     } else {
                         message ("Could not get the path to the file");
@@ -490,6 +481,46 @@ namespace Hashit {
 
             this.toast_overlay.set_child (main_box);
             this.main_window.set_child (this.toast_overlay);
+        }
+
+        public void on_clear_button () {
+            this.last_hash_entry.set_text("");
+            this.text_view_buffer.set_text("");
+            this.selection_box.reset_to_default();
+            
+            // Reset compare tab elements
+            this.oem_hash_entry.set_text("");
+            this.compare_state_label.set_markup(
+                "<span font_size='large'><b>" + _("Compare State") + "</b></span>"
+            );
+            
+            // Reset icon to default status
+            while (this.result_img_box.get_first_child() != null) {
+                this.result_img_box.remove(this.result_img_box.get_first_child());
+            }
+            this.result_img_box.append(this.result_status_img);
+            this.result_flag = ResultState.NONE;
+        }
+
+        public void get_file_hash (string path) {
+            this.files_uris.append_val (path);
+
+            string hash = Hashit.Backend.Checksum.calculate_hash (
+                this.selection_box.get_dropdown_value (),
+                path
+            );
+            this.last_hash_entry.set_text (hash);
+
+            TextIter text_end_iter;
+            this.text_view_buffer.get_end_iter (out text_end_iter);
+
+            var file_name = Path.get_basename (path);
+            string iter_text = hash + "  " + file_name + "\n";
+            this.text_view_buffer.insert (
+                ref text_end_iter, iter_text, iter_text.length
+            );
+
+            this.text_view.scroll_to_iter (text_end_iter, 0.0, false, 0.0, 0.0);
         }
 
         public App () {
