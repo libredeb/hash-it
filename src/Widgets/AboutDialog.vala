@@ -12,7 +12,7 @@ namespace Hashit.Widgets {
         about.set_transient_for (parent);
         about.set_modal (true);
         about.set_program_name (Constants.PROGRAM_NAME);
-        about.set_version (Constants.VERSION);
+        about.set_version (Config.PACKAGE_VERSION);
         about.set_copyright (Constants.APP_YEARS);
         about.set_logo_icon_name (Constants.EXEC_NAME);
         about.set_license ("GPL v3");

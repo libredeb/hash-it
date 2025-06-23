@@ -6,7 +6,6 @@
 //Here are declared the constants
 namespace Constants {
    public const string PROGRAM_NAME = "Hash-it";
-   public const string VERSION = "0.0.1.2";
    public const string EXEC_NAME = "hashit";
    public const string APP_YEARS = "2016-2025";
 }
