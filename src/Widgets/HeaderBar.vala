@@ -60,6 +60,10 @@ namespace Hashit.Widgets {
             ((Hashit.App) app).on_clear_button ();
         });
 
+        save_button.clicked.connect (() => {
+            ((Hashit.App) app).on_save_button ();
+        });
+
         return header_bar;
     }
 }

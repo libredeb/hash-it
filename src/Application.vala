@@ -502,6 +502,38 @@ namespace Hashit {
             this.result_flag = ResultState.NONE;
         }
 
+        public void on_save_button () {
+            var dialog = new Gtk.FileDialog ();
+            dialog.set_title (_("Save as"));
+            dialog.set_initial_name ("*.txt");
+
+            dialog.save.begin (this.main_window, null, (obj, res) => {
+                try {
+                    var file = dialog.save.end (res);
+                    if (file != null) {
+                        Gtk.TextBuffer buffer = this.text_view.get_buffer ();
+                        Gtk.TextIter start, end;
+                        buffer.get_bounds (out start, out end);
+
+                        string text_view_content = buffer.get_text (start, end, false);
+                        uint8[] bytes = (uint8[]) text_view_content.data;
+                        string? etag = null;
+
+                        file.replace_contents (
+                            bytes,
+                            null,
+                            false,
+                            FileCreateFlags.NONE,
+                            out etag,
+                            null
+                        );
+                    }
+                } catch (Error e) {
+                    warning ("Error when saving the file: %s", e.message);
+                }
+            });
+        }
+
         public void get_file_hash (string path) {
             this.files_uris.append_val (path);
 
