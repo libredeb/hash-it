@@ -11,7 +11,7 @@
   <project_license>GPL-3.0-or-later</project_license>
 
   <name>Hash-it</name>
-  <summary>The most intuitive and simple hash tool checker for elementary OS</summary>
+  <summary>The most intuitive and simple hash checker tool for elementary OS</summary>
   <description>
     <p>Hashit is a fast and beautiful hash check tool.</p>
     <p>Writen in Vala and GTK+ 4.0 with the purpose to get the hash of file and compare it with other provided hash.</p>
@@ -26,7 +26,7 @@
   <screenshots>
     <screenshot type="default">
       <image>https://raw.githubusercontent.com/libredeb/hash-it/main/screenshot.png</image>
-      <caption>LightPad in action</caption>
+      <caption>Hashit in action</caption>
     </screenshot>
   </screenshots>
 

@@ -7,83 +7,124 @@ msgid ""
 msgstr ""
 "Project-Id-Version: com.github.libredeb.hashit\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-05-30 21:45-0300\n"
+"POT-Creation-Date: 2025-06-23 22:36-0300\n"
 "PO-Revision-Date: 2025-05-30 21:45-0300\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "Language: es\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=ASCII\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
+#. Labels
+#: src/Application.vala:131
+msgid "Input File"
+msgstr "Archivo de entrada"
+
+#: src/Application.vala:133
+msgid "Hash Type"
+msgstr "Tipo de Hash"
+
+#: src/Application.vala:135
+msgid "Last Hash"
+msgstr "Último Hash"
+
+#: src/Application.vala:141
+msgid "Original Hash:"
+msgstr "Hash Original:"
+
+#: src/Application.vala:148 src/Application.vala:494
+msgid "Comparison Result"
+msgstr "Resultado de la comparación"
+
 #. Buttons
-#: src/Application.vala:160
+#: src/Application.vala:168
 msgid "Copy"
-msgstr ""
+msgstr "Copiar"
+
+#: src/Application.vala:171
+msgid "Copy History"
+msgstr "Copiar Historial"
+
+#: src/Application.vala:172 src/Application.vala:310
+msgid "Compare"
+msgstr "Comparar"
+
+#: src/Application.vala:309
+msgid "Results"
+msgstr "Resultados"
+
+#: src/Application.vala:334
+msgid "Checksums match! File Integrity OK"
+msgstr "Los hashes coinciden. Integridad del archivo OK"
+
+#: src/Application.vala:354
+msgid "Checksums do not match! File Integrity ERROR"
+msgstr "Los hashes no coinciden! ERROR de integridad del archivo"
+
+#: src/Application.vala:507
+msgid "Save as"
+msgstr "Guardar como"
 
 #: data/com.github.libredeb.hashit.desktop.in:5
 msgid "Hashit"
-msgstr ""
+msgstr "Hashit"
 
 #: data/com.github.libredeb.hashit.desktop.in:6
-msgid "Intuitive and simple Hash Tool checker"
-msgstr ""
+msgid "Intuitive and simple Hash Checker Tool"
+msgstr "Herramienta de comparación de hash intuitiva y sencilla"
 
 #: data/com.github.libredeb.hashit.desktop.in:7
 msgid "Hash Checker"
-msgstr ""
+msgstr "Comprobador de Hash"
 
 #: data/com.github.libredeb.hashit.desktop.in:11
 msgid "hash;check;sum;md5;sha256;"
-msgstr ""
-
-#: data/com.github.libredeb.hashit.desktop.in:18
-msgid "About Hashit"
-msgstr ""
+msgstr "hash;check;sum;md5;sha256;"
 
 #: data/com.github.libredeb.hashit.appdata.xml.in:13
 msgid "Hash-it"
-msgstr ""
+msgstr "Hash-it"
 
 #: data/com.github.libredeb.hashit.appdata.xml.in:14
-msgid "The most intuitive and simple hash tool checker for elementary OS"
-msgstr ""
+msgid "The most intuitive and simple hash checker tool for elementary OS"
+msgstr "La herramienta de verificación de hash más intuitiva y sencilla para elementary OS"
 
 #: data/com.github.libredeb.hashit.appdata.xml.in:16
 msgid "Hashit is a fast and beautiful hash check tool."
-msgstr ""
+msgstr "Hashit es una herramienta de verificación de hash rápida y bonita."
 
 #: data/com.github.libredeb.hashit.appdata.xml.in:17
 msgid ""
-"Writen in Vala and GTK+ 3.0 with the purpose to get the hash of file and "
+"Writen in Vala and GTK+ 4.0 with the purpose to get the hash of file and "
 "compare it with other provided hash."
-msgstr ""
+msgstr "Escrito en Vala y GTK+ 4.0 con el propósito de obtener el hash de un fichero y compararlo con otro hash proporcionado."
 
 #: data/com.github.libredeb.hashit.appdata.xml.in:18
 msgid "Features included:"
-msgstr ""
+msgstr "Características incluidas:"
 
 #: data/com.github.libredeb.hashit.appdata.xml.in:20
 msgid "Generate most popular hashes of files"
-msgstr ""
+msgstr "Generar los hashes de archivos más populares"
 
 #: data/com.github.libredeb.hashit.appdata.xml.in:21
 msgid "Drag and Drop"
-msgstr ""
+msgstr "Arrastrar y soltar"
 
 #: data/com.github.libredeb.hashit.appdata.xml.in:22
 msgid "Compare current file hash with online provided hashes"
-msgstr ""
+msgstr "Comparar el hash del archivo actual con hashes proporcionados en línea"
 
 #: data/com.github.libredeb.hashit.appdata.xml.in:29
-msgid "LightPad in action"
-msgstr ""
+msgid "Hashit in action"
+msgstr "Hashit en acción"
 
 #: data/com.github.libredeb.hashit.appdata.xml.in:53
 msgid "Juan Pablo Lozano"
-msgstr ""
+msgstr "Juan Pablo Lozano"
 
 #: data/com.github.libredeb.hashit.appdata.xml.in:67
 msgid "First release."
-msgstr ""
+msgstr "Primer lanzamiento."

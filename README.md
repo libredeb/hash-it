@@ -12,15 +12,15 @@ Hashit is a fast and beautiful hash check tool. Writen in Vala and GTK+ 4.0 with
    1. Install dependencies:
    * For Ubuntu:
       ```sh
-      sudo apt-get install meson ninja-build valac libvala-*-dev libglib2.0-dev libgtk-3-dev libgranite-dev python3 python3-wheel python3-setuptools
+      sudo apt-get install cmake meson ninja-build valac libvala-*-dev libglib2.0-dev libgtk-4-dev libgranite-7-dev libadwaita-1-dev python3 python3-wheel python3-setuptools
       ```
    * For Fedora:
       ```sh
-      sudo dnf install meson ninja-build vala libvala-devel glib-devel gtk3-devel granite-devel python3 python3-wheel python3-setuptools gnome-menus
+      sudo dnf install cmake meson ninja-build vala libvala-devel glib-devel gtk4-devel granite-7-devel libadwaita-devel python3 python3-wheel python3-setuptools gnome-menus
       ```
    * For Arch Linux:
       ```sh
-      sudo pacman -Sy meson ninja vala glib2 gdk-pixbuf2 gtk3 granite-1 python python-wheel python-setuptools
+      sudo pacman -Sy meson ninja vala glib2 gdk-pixbuf2 gtk4 granite7 libadwaita-1 python python-wheel python-setuptools
       ```
    2. Clone this repository into your machine
       ```sh

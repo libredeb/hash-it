@@ -145,7 +145,7 @@ namespace Hashit {
             compare_result_label.set_margin_top (6);
             this.compare_state_label = new Label ("");
             this.compare_state_label.set_markup (
-                "<span font_size='large'><b>" + _("Compare State") + "</b></span>"
+                "<span font_size='large'><b>" + _("Comparison Result") + "</b></span>"
             );
             this.compare_state_label.set_margin_bottom (25);
             this.compare_state_label.set_margin_end (25);
@@ -331,7 +331,7 @@ namespace Hashit {
                     this.compare_state_label.set_markup (
                         "<span font_size='large' fgcolor='#000' bgcolor='#80FF80'><b>     "
                         + selection_box.get_dropdown_value ()
-                        + _("Checksums match! File Integrity is OK") + "     </b></span>"
+                        + _("Checksums match! File Integrity OK") + "     </b></span>"
                     );
                 } else {
                     switch (result_flag) {

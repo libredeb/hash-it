@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: com.github.libredeb.hashit\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-05-30 21:45-0300\n"
+"POT-Creation-Date: 2025-06-23 22:36-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,9 +17,54 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
+#. Labels
+#: src/Application.vala:131
+msgid "Input File"
+msgstr ""
+
+#: src/Application.vala:133
+msgid "Hash Type"
+msgstr ""
+
+#: src/Application.vala:135
+msgid "Last Hash"
+msgstr ""
+
+#: src/Application.vala:141
+msgid "Original Hash:"
+msgstr ""
+
+#: src/Application.vala:148 src/Application.vala:494
+msgid "Comparison Result"
+msgstr ""
+
 #. Buttons
-#: src/Application.vala:160
+#: src/Application.vala:168
 msgid "Copy"
+msgstr ""
+
+#: src/Application.vala:171
+msgid "Copy History"
+msgstr ""
+
+#: src/Application.vala:172 src/Application.vala:310
+msgid "Compare"
+msgstr ""
+
+#: src/Application.vala:309
+msgid "Results"
+msgstr ""
+
+#: src/Application.vala:334
+msgid "Checksums match! File Integrity OK"
+msgstr ""
+
+#: src/Application.vala:354
+msgid "Checksums do not match! File Integrity ERROR"
+msgstr ""
+
+#: src/Application.vala:507
+msgid "Save as"
 msgstr ""
 
 #: data/com.github.libredeb.hashit.desktop.in:5
@@ -27,7 +72,7 @@ msgid "Hashit"
 msgstr ""
 
 #: data/com.github.libredeb.hashit.desktop.in:6
-msgid "Intuitive and simple Hash Tool checker"
+msgid "Intuitive and simple Hash Checker Tool"
 msgstr ""
 
 #: data/com.github.libredeb.hashit.desktop.in:7
@@ -38,16 +83,12 @@ msgstr ""
 msgid "hash;check;sum;md5;sha256;"
 msgstr ""
 
-#: data/com.github.libredeb.hashit.desktop.in:18
-msgid "About Hashit"
-msgstr ""
-
 #: data/com.github.libredeb.hashit.appdata.xml.in:13
 msgid "Hash-it"
 msgstr ""
 
 #: data/com.github.libredeb.hashit.appdata.xml.in:14
-msgid "The most intuitive and simple hash tool checker for elementary OS"
+msgid "The most intuitive and simple hash checker tool for elementary OS"
 msgstr ""
 
 #: data/com.github.libredeb.hashit.appdata.xml.in:16
@@ -56,7 +97,7 @@ msgstr ""
 
 #: data/com.github.libredeb.hashit.appdata.xml.in:17
 msgid ""
-"Writen in Vala and GTK+ 3.0 with the purpose to get the hash of file and "
+"Writen in Vala and GTK+ 4.0 with the purpose to get the hash of file and "
 "compare it with other provided hash."
 msgstr ""
 
@@ -77,7 +118,7 @@ msgid "Compare current file hash with online provided hashes"
 msgstr ""
 
 #: data/com.github.libredeb.hashit.appdata.xml.in:29
-msgid "LightPad in action"
+msgid "Hashit in action"
 msgstr ""
 
 #: data/com.github.libredeb.hashit.appdata.xml.in:53

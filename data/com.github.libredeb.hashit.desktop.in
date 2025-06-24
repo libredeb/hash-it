@@ -3,7 +3,7 @@ Version=1.0
 Type=Application
 
 Name=Hashit
-Comment=Intuitive and simple Hash Tool checker
+Comment=Intuitive and simple Hash Checker Tool
 GenericName=Hash Checker
 
 Exec=com.github.libredeb.hashit
@@ -13,7 +13,3 @@ Terminal=false
 Categories=GNOME;GTK;Utility;
 Actions=AboutDialog;
 X-GNOME-Gettext-Domain=hashit
-
-[Desktop Action AboutDialog]
-Name=About Hashit
-Exec=com.github.libredeb.hashit --about
