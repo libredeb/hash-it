@@ -491,7 +491,7 @@ namespace Hashit {
             // Reset compare tab elements
             this.oem_hash_entry.set_text("");
             this.compare_state_label.set_markup(
-                "<span font_size='large'><b>" + _("Compare State") + "</b></span>"
+                "<span font_size='large'><b>" + _("Comparison Result") + "</b></span>"
             );
             
             // Reset icon to default status

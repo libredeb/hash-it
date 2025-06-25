@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: com.github.libredeb.hashit\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-06-23 22:36-0300\n"
+"POT-Creation-Date: 2025-06-24 22:27-0300\n"
 "PO-Revision-Date: 2025-05-30 21:45-0300\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -89,7 +89,9 @@ msgstr "Hash-it"
 
 #: data/com.github.libredeb.hashit.appdata.xml.in:14
 msgid "The most intuitive and simple hash checker tool for elementary OS"
-msgstr "La herramienta de verificación de hash más intuitiva y sencilla para elementary OS"
+msgstr ""
+"La herramienta de verificación de hash más intuitiva y sencilla para "
+"elementary OS"
 
 #: data/com.github.libredeb.hashit.appdata.xml.in:16
 msgid "Hashit is a fast and beautiful hash check tool."
@@ -99,7 +101,9 @@ msgstr "Hashit es una herramienta de verificación de hash rápida y bonita."
 msgid ""
 "Writen in Vala and GTK+ 4.0 with the purpose to get the hash of file and "
 "compare it with other provided hash."
-msgstr "Escrito en Vala y GTK+ 4.0 con el propósito de obtener el hash de un fichero y compararlo con otro hash proporcionado."
+msgstr ""
+"Escrito en Vala y GTK+ 4.0 con el propósito de obtener el hash de un fichero "
+"y compararlo con otro hash proporcionado."
 
 #: data/com.github.libredeb.hashit.appdata.xml.in:18
 msgid "Features included:"
