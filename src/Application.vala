@@ -525,7 +525,7 @@ namespace Hashit {
             });
         }
 
-        private void on_claculate_hash (Gdk.FileList file_list) {
+        public void on_claculate_hash (Gdk.FileList file_list) {
             thread = new GLib.Thread<int>("LongProcessThread", () => {
                 foreach (var file in file_list.get_files()) {
                     if (file is GLib.File) {

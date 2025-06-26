@@ -49,7 +49,11 @@ namespace Hashit.Widgets {
         open_button.clicked.connect (() => {
             Hashit.Widgets.FileDialog.select_file.begin (parent, (path) => {
                 if (path != null) {
-                    ((Hashit.App) app).get_file_hash (path);
+                    ((Hashit.App) app).on_claculate_hash (
+                        new Gdk.FileList.from_array (
+                            { GLib.File.new_for_path(path) }
+                        )
+                    );
                 } else {
                     stdout.printf ("No file was selected.\n");
                 }
