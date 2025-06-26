@@ -32,6 +32,8 @@ namespace Hashit {
         private Gtk.Box result_img_box;
         private Gtk.Image result_status_img;
 
+        private GLib.Thread<int> thread;
+
         public void build_and_run () {
             // Initialize variables
             files_uris = new Array<string> ();
@@ -437,16 +439,7 @@ namespace Hashit {
 
             file_target.drop.connect ((value, x, y) => {
                 var file_list = (Gdk.FileList) value;
-
-                foreach (var file in file_list.get_files()) {
-                    if (file is GLib.File) {
-                        var gio_file = (GLib.File) file;
-                        string file_path = gio_file.get_path();
-                        this.get_file_hash (file_path);
-                    } else {
-                        message ("File type is not recognized");
-                    }
-                }
+                on_claculate_hash (file_list);
                 return true;
             });
             drag_box.add_controller (file_target);
@@ -532,6 +525,21 @@ namespace Hashit {
             });
         }
 
+        private void on_claculate_hash (Gdk.FileList file_list) {
+            thread = new GLib.Thread<int>("LongProcessThread", () => {
+                foreach (var file in file_list.get_files()) {
+                    if (file is GLib.File) {
+                        var gio_file = (GLib.File) file;
+                        string file_path = gio_file.get_path();
+                        this.get_file_hash (file_path);
+                    } else {
+                        message ("File type is not recognized");
+                    }
+                }
+                return 0;
+            });
+        }
+
         public void get_file_hash (string path) {
             this.files_uris.append_val (path);
 
@@ -539,18 +547,22 @@ namespace Hashit {
                 this.selection_box.get_dropdown_value (),
                 path
             );
-            this.last_hash_entry.set_text (hash);
 
-            TextIter text_end_iter;
-            this.text_view_buffer.get_end_iter (out text_end_iter);
+            GLib.Idle.add(() => {
+                this.last_hash_entry.set_text (hash);
 
-            var file_name = Path.get_basename (path);
-            string iter_text = hash + "  " + file_name + "\n";
-            this.text_view_buffer.insert (
-                ref text_end_iter, iter_text, iter_text.length
-            );
+                TextIter text_end_iter;
+                this.text_view_buffer.get_end_iter (out text_end_iter);
 
-            this.text_view.scroll_to_iter (text_end_iter, 0.0, false, 0.0, 0.0);
+                var file_name = Path.get_basename (path);
+                string iter_text = hash + "  " + file_name + "\n";
+                this.text_view_buffer.insert (
+                    ref text_end_iter, iter_text, iter_text.length
+                );
+
+                this.text_view.scroll_to_iter (text_end_iter, 0.0, false, 0.0, 0.0);
+                return false;
+            });
         }
 
         public App () {
