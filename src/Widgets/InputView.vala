@@ -31,7 +31,7 @@ namespace Hashit.Widgets {
             /*
              * LABELS
              */
-            description_label = new Label ("Drag & Drop File(s)");
+            description_label = new Label (_("Drag & Drop File(s)"));
 
             /*
              * ARM THE WIDGET

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: com.github.libredeb.hashit\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-06-24 22:27-0300\n"
+"POT-Creation-Date: 2025-06-25 21:17-0300\n"
 "PO-Revision-Date: 2025-05-30 21:45-0300\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -34,7 +34,7 @@ msgstr "Último Hash"
 msgid "Original Hash:"
 msgstr "Hash Original:"
 
-#: src/Application.vala:148 src/Application.vala:494
+#: src/Application.vala:148 src/Application.vala:492
 msgid "Comparison Result"
 msgstr "Resultado de la comparación"
 
@@ -55,17 +55,21 @@ msgstr "Comparar"
 msgid "Results"
 msgstr "Resultados"
 
-#: src/Application.vala:334
+#: src/Application.vala:333
 msgid "Checksums match! File Integrity OK"
 msgstr "Los hashes coinciden. Integridad del archivo OK"
 
-#: src/Application.vala:354
+#: src/Application.vala:352
 msgid "Checksums do not match! File Integrity ERROR"
 msgstr "Los hashes no coinciden! ERROR de integridad del archivo"
 
-#: src/Application.vala:507
+#: src/Application.vala:505
 msgid "Save as"
 msgstr "Guardar como"
+
+#: src/Widgets/InputView.vala:34
+msgid "Drag & Drop File(s)"
+msgstr "Arrastrar y soltar archivo(s)"
 
 #: data/com.github.libredeb.hashit.desktop.in:5
 msgid "Hashit"

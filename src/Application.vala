@@ -330,7 +330,6 @@ namespace Hashit {
 
                     this.compare_state_label.set_markup (
                         "<span font_size='large' fgcolor='#000' bgcolor='#80FF80'><b>     "
-                        + selection_box.get_dropdown_value ()
                         + _("Checksums match! File Integrity OK") + "     </b></span>"
                     );
                 } else {
@@ -350,7 +349,6 @@ namespace Hashit {
 
                     this.compare_state_label.set_markup (
                         "<span font_size='large' fgcolor='#000' bgcolor='#FF8080'><b>     "
-                        + selection_box.get_dropdown_value ()
                         + _("Checksums do not match! File Integrity ERROR") + "     </b></span>"
                     );
                 }
