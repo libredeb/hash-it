@@ -25,7 +25,7 @@ namespace Hashit {
         public TextView text_view;
         public TextBuffer text_view_buffer;
         public ResultState result_flag = ResultState.NONE;
-        
+
         // Compare tab elements
         private Gtk.Entry oem_hash_entry;
         private Gtk.Label compare_state_label;
@@ -482,21 +482,21 @@ namespace Hashit {
         }
 
         public void on_clear_button () {
-            this.last_hash_entry.set_text("");
-            this.text_view_buffer.set_text("");
-            this.selection_box.reset_to_default();
-            
+            this.last_hash_entry.set_text ("");
+            this.text_view_buffer.set_text ("");
+            this.selection_box.reset_to_default ();
+
             // Reset compare tab elements
-            this.oem_hash_entry.set_text("");
-            this.compare_state_label.set_markup(
+            this.oem_hash_entry.set_text ("");
+            this.compare_state_label.set_markup (
                 "<span font_size='large'><b>" + _("Comparison Result") + "</b></span>"
             );
-            
+
             // Reset icon to default status
-            while (this.result_img_box.get_first_child() != null) {
-                this.result_img_box.remove(this.result_img_box.get_first_child());
+            while (this.result_img_box.get_first_child () != null) {
+                this.result_img_box.remove (this.result_img_box.get_first_child ());
             }
-            this.result_img_box.append(this.result_status_img);
+            this.result_img_box.append (this.result_status_img);
             this.result_flag = ResultState.NONE;
         }
 
