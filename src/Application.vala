@@ -433,21 +433,21 @@ namespace Hashit {
             /*
              * ASSIGN THE DRAG ACTION TO WIDGET
              */
-            var file_target = new DropTarget (typeof (File), Gdk.DragAction.COPY);
+            var file_target = new DropTarget (typeof (Gdk.FileList), Gdk.DragAction.COPY);
 
             file_target.drop.connect ((value, x, y) => {
-                if (value.holds (typeof (File))) {
-                    File? file = value.get_object () as File;
-                    if (file != null) {
-                        this.get_file_hash (file.get_path ());
-                        return true;
+                var file_list = (Gdk.FileList) value;
+
+                foreach (var file in file_list.get_files()) {
+                    if (file is GLib.File) {
+                        var gio_file = (GLib.File) file;
+                        string file_path = gio_file.get_path();
+                        this.get_file_hash (file_path);
                     } else {
-                        message ("Could not get the path to the file");
+                        message ("File type is not recognized");
                     }
-                } else {
-                    message ("File type is not recognized %s", value.type_name ());
                 }
-                return false;
+                return true;
             });
             drag_box.add_controller (file_target);
 
