@@ -449,7 +449,7 @@ namespace Hashit {
                 var clipboard = display.get_clipboard ();
                 clipboard.set_text (last_hash_entry.get_text ());
 
-                var toast = new Adw.Toast ("Hash successfully copied");
+                var toast = new Adw.Toast (_("Hash successfully copied"));
                 toast.set_timeout (2);
                 this.toast_overlay.add_toast (toast);
             });
@@ -465,7 +465,7 @@ namespace Hashit {
                 string text_view_content = buffer.get_text (start, end, false);
                 clipboard.set_text (text_view_content);
 
-                var toast = new Adw.Toast ("History successfully copied");
+                var toast = new Adw.Toast (_("History successfully copied"));
                 toast.set_timeout (2);
                 this.toast_overlay.add_toast (toast);
             });
