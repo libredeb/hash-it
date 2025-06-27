@@ -65,7 +65,7 @@ And for generate each LINGUA `po` file, run next command:
 ninja com.github.libredeb.hashit-update-po
 ```
 
-## 📄 License
+## License
 
 This project is licensed under the GNU General Public License v3.0 or later - see the [COPYING](COPYING) file for details.
 

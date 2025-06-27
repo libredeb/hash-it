@@ -2,22 +2,25 @@ Dependencies:
     debhelper (>= 7)
     build-essential
     cmake
-    automake
-    autoconf
+    meson
+    ninja-build
     pkg-config
     valac
-    libgtk-3-dev
-    libgranite-dev (>= 0.3.1)
+    libgtk-4-dev
+    libgranite-7-dev
+    libadwaita-1-dev
     libglib2.0-dev
+    python3
+    python3-wheel
+    python3-setuptools
 
 Installation:
-    bzr branch lp:hashit
+    git clone https://github.com/libredeb/hash-it.git
     cd hashit
-    mkdir build
+    meson setup build --prefix=/usr
     cd build
-    cmake -DCMAKE_INSTALL_PREFIX=/usr ..
-    make
-    sudo make install
+    ninja
+    sudo ninja install
 
 Uninstall
-    sudo make uninstall
+    sudo ninja uninstall
