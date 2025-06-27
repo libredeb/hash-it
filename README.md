@@ -54,7 +54,7 @@ Hashit is a fast and beautiful hash check tool. Writen in Vala and GTK+ 4.0 with
 
 ### Translations
 
-To generate a new translation template file (a.k.a. `pot`) run next command:
+To add more supported languages, please, edit [LINGUAS](./po/LINGUAS) file and update the translation template file (a.k.a. `pot`) running next command:
 ```sh
 cd build
 ninja com.github.libredeb.hashit-pot
