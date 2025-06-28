@@ -1,7 +1,12 @@
-![icon](./data/icons/128/hashit.svg)
 # Hash-it
 
-The most intuitive and simple hash tool checker for [elementary OS](https://elementary.io).
+[![License: GPL-3.0-or-later](https://img.shields.io/badge/License-GPL%203.0--or--later-green.svg)](https://opensource.org/licenses/GPL-3.0)
+[![Build Status](https://github.com/libredeb/hash-it/workflows/CI/badge.svg)](https://github.com/libredeb/hash-it/actions)
+[![Code Style](https://img.shields.io/badge/code%20style-Vala-purple.svg)](https://wiki.gnome.org/Projects/Vala)
+
+![icon](./data/icons/128/hashit.svg)
+
+**The most intuitive and simple hash tool checker for [elementary OS](https://elementary.io)**
 
 Hashit is a fast and beautiful hash check tool. Writen in Vala and GTK+ 4.0 with the purpose to get the hash of file and compare it with other provided hash.
 
@@ -49,7 +54,7 @@ Hashit is a fast and beautiful hash check tool. Writen in Vala and GTK+ 4.0 with
 
 ### Translations
 
-To generate a new translation template file (a.k.a. `pot`) run next command:
+To add more supported languages, please, edit [LINGUAS](./po/LINGUAS) file and update the translation template file (a.k.a. `pot`) running next command:
 ```sh
 cd build
 ninja com.github.libredeb.hashit-pot
@@ -59,3 +64,9 @@ And for generate each LINGUA `po` file, run next command:
 ```sh
 ninja com.github.libredeb.hashit-update-po
 ```
+
+## License
+
+This project is licensed under the GNU General Public License v3.0 or later - see the [COPYING](COPYING) file for details.
+
+⭐ If you like Hash-it, leave me a star on GitHub!

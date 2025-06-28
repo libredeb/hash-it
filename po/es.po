@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: com.github.libredeb.hashit\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-06-25 21:17-0300\n"
+"POT-Creation-Date: 2025-06-27 19:41-0300\n"
 "PO-Revision-Date: 2025-05-30 21:45-0300\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -18,56 +18,96 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #. Labels
-#: src/Application.vala:131
+#: src/Application.vala:133
 msgid "Input File"
 msgstr "Archivo de entrada"
 
-#: src/Application.vala:133
+#: src/Application.vala:135
 msgid "Hash Type"
 msgstr "Tipo de Hash"
 
-#: src/Application.vala:135
+#: src/Application.vala:137
 msgid "Last Hash"
 msgstr "Último Hash"
 
-#: src/Application.vala:141
+#: src/Application.vala:143
 msgid "Original Hash:"
 msgstr "Hash Original:"
 
-#: src/Application.vala:148 src/Application.vala:492
+#: src/Application.vala:150 src/Application.vala:485
 msgid "Comparison Result"
 msgstr "Resultado de la comparación"
 
 #. Buttons
-#: src/Application.vala:168
+#: src/Application.vala:170
 msgid "Copy"
 msgstr "Copiar"
 
-#: src/Application.vala:171
+#: src/Application.vala:173
 msgid "Copy History"
 msgstr "Copiar Historial"
 
-#: src/Application.vala:172 src/Application.vala:310
+#: src/Application.vala:174 src/Application.vala:312
 msgid "Compare"
 msgstr "Comparar"
 
-#: src/Application.vala:309
+#: src/Application.vala:311
 msgid "Results"
 msgstr "Resultados"
 
-#: src/Application.vala:333
+#: src/Application.vala:335
 msgid "Checksums match! File Integrity OK"
 msgstr "Los hashes coinciden. Integridad del archivo OK"
 
-#: src/Application.vala:352
+#: src/Application.vala:354
 msgid "Checksums do not match! File Integrity ERROR"
 msgstr "Los hashes no coinciden! ERROR de integridad del archivo"
 
-#: src/Application.vala:505
+#: src/Application.vala:452
+msgid "Hash successfully copied"
+msgstr "Hash copiado exitosamente"
+
+#: src/Application.vala:468
+msgid "History successfully copied"
+msgstr "Historial copiado exitosamente"
+
+#: src/Application.vala:498
 msgid "Save as"
 msgstr "Guardar como"
 
+#: src/Widgets/AboutDialog.vala:20
+#, fuzzy
+msgid "The most intuitive and simple hash tool checker"
+msgstr ""
+"La herramienta de verificación de hash más intuitiva y sencilla para "
+"elementary OS"
+
+#: src/Widgets/FileDialog.vala:12
+msgid "Select file"
+msgstr "Seleccionar archivo"
+
+#: src/Widgets/HeaderBar.vala:23
+msgid "About"
+msgstr "Acerca de"
+
+#: src/Widgets/HeaderBar.vala:37
+#, fuzzy
+msgid "Open File"
+msgstr "Abrir archivo"
+
+#: src/Widgets/HeaderBar.vala:39
+msgid "Save results to a file"
+msgstr "Guardar resultados en un archivo"
+
+#: src/Widgets/HeaderBar.vala:41
+msgid "Clear"
+msgstr "Limpiar"
+
+#.
+#. * LABELS
+#.
 #: src/Widgets/InputView.vala:34
+#, fuzzy
 msgid "Drag & Drop File(s)"
 msgstr "Arrastrar y soltar archivo(s)"
 

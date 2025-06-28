@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: com.github.libredeb.hashit\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-06-25 21:17-0300\n"
+"POT-Creation-Date: 2025-06-27 19:41-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,55 +18,90 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 
 #. Labels
-#: src/Application.vala:131
+#: src/Application.vala:133
 msgid "Input File"
 msgstr ""
 
-#: src/Application.vala:133
+#: src/Application.vala:135
 msgid "Hash Type"
 msgstr ""
 
-#: src/Application.vala:135
+#: src/Application.vala:137
 msgid "Last Hash"
 msgstr ""
 
-#: src/Application.vala:141
+#: src/Application.vala:143
 msgid "Original Hash:"
 msgstr ""
 
-#: src/Application.vala:148 src/Application.vala:492
+#: src/Application.vala:150 src/Application.vala:485
 msgid "Comparison Result"
 msgstr ""
 
 #. Buttons
-#: src/Application.vala:168
+#: src/Application.vala:170
 msgid "Copy"
 msgstr ""
 
-#: src/Application.vala:171
+#: src/Application.vala:173
 msgid "Copy History"
 msgstr ""
 
-#: src/Application.vala:172 src/Application.vala:310
+#: src/Application.vala:174 src/Application.vala:312
 msgid "Compare"
 msgstr ""
 
-#: src/Application.vala:309
+#: src/Application.vala:311
 msgid "Results"
 msgstr ""
 
-#: src/Application.vala:333
+#: src/Application.vala:335
 msgid "Checksums match! File Integrity OK"
 msgstr ""
 
-#: src/Application.vala:352
+#: src/Application.vala:354
 msgid "Checksums do not match! File Integrity ERROR"
 msgstr ""
 
-#: src/Application.vala:505
+#: src/Application.vala:452
+msgid "Hash successfully copied"
+msgstr ""
+
+#: src/Application.vala:468
+msgid "History successfully copied"
+msgstr ""
+
+#: src/Application.vala:498
 msgid "Save as"
 msgstr ""
 
+#: src/Widgets/AboutDialog.vala:20
+msgid "The most intuitive and simple hash tool checker"
+msgstr ""
+
+#: src/Widgets/FileDialog.vala:12
+msgid "Select file"
+msgstr ""
+
+#: src/Widgets/HeaderBar.vala:23
+msgid "About"
+msgstr ""
+
+#: src/Widgets/HeaderBar.vala:37
+msgid "Open File"
+msgstr ""
+
+#: src/Widgets/HeaderBar.vala:39
+msgid "Save results to a file"
+msgstr ""
+
+#: src/Widgets/HeaderBar.vala:41
+msgid "Clear"
+msgstr ""
+
+#.
+#. * LABELS
+#.
 #: src/Widgets/InputView.vala:34
 msgid "Drag & Drop File(s)"
 msgstr ""

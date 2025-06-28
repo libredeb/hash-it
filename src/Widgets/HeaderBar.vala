@@ -10,7 +10,6 @@ namespace Hashit.Widgets {
     public static Gtk.HeaderBar build_header_bar (Gtk.Window parent, Gtk.Application app) {
 
         var header_bar = new Gtk.HeaderBar ();
-        header_bar.add_css_class ("header_bar");
         header_bar.set_show_title_buttons (true);
         var title = new Gtk.Label (Constants.PROGRAM_NAME);
         header_bar.set_title_widget (title);
@@ -21,7 +20,7 @@ namespace Hashit.Widgets {
             tooltip_markup = Granite.markup_accel_tooltip ({"F10"}, "Menu")
         };
         var menu = new Menu ();
-        menu.append ("About", "app.about");
+        menu.append (_("About"), "app.about");
         var popover = new Gtk.PopoverMenu.from_model (menu);
         menu_button.set_popover (popover);
 
@@ -35,11 +34,11 @@ namespace Hashit.Widgets {
         app.add_action (about_action);
 
         var open_button = new Button.from_icon_name ("folder-open");
-        open_button.set_tooltip_text ("Open File");
+        open_button.set_tooltip_text (_("Open File"));
         var save_button = new Button.from_icon_name ("document-save-as");
-        save_button.set_tooltip_text ("Save results to a file");
+        save_button.set_tooltip_text (_("Save results to a file"));
         var clear_button = new Button.from_icon_name ("edit-clear");
-        clear_button.set_tooltip_text ("Clear");
+        clear_button.set_tooltip_text (_("Clear"));
         header_bar.pack_start (open_button);
         header_bar.pack_start (save_button);
         header_bar.pack_end (menu_button);
@@ -55,7 +54,7 @@ namespace Hashit.Widgets {
                         )
                     );
                 } else {
-                    stdout.printf ("No file was selected.\n");
+                    message ("No file was selected.\n");
                 }
             });
         });
