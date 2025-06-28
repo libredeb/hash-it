@@ -38,6 +38,14 @@ config_dep = declare_dependency(
 
 config_inc_dir = include_directories('.')
 
+gnome = import('gnome')
+asresources = gnome.compile_resources(
+    'as-resources',
+    join_paths('data', meson.project_name() + '.gresource.xml'),
+    source_dir: 'data',
+    c_name: 'as'
+)
+
 ValaArgs = [
     '--pkg=config',
     '--vapidir=' + VAPI_DIR
@@ -46,6 +54,7 @@ ValaArgs = [
 # Create a new executable, list the files we want to compile, list the dependencies we need, and install
 executable(
     meson.project_name(),
+    asresources,
     'src/Widgets/InputView.vala',
     'src/Widgets/Selection.vala',
     'src/Widgets/AboutDialog.vala',

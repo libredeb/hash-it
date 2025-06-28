@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<gresources>
+  <gresource prefix="/com/github/libredeb/hashit/icons">
+    <file compressed="true" preprocess="xml-stripblanks" alias="result-ok.svg">gfx/result-ok.svg</file>
+    <file compressed="true" preprocess="xml-stripblanks" alias="result-status.svg">gfx/result-status.svg</file>
+    <file compressed="true" preprocess="xml-stripblanks" alias="result-error.svg">gfx/result-error.svg</file>
+  </gresource>
+</gresources>
