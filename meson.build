@@ -2,7 +2,7 @@
 project(
     'io.github.libredeb.hashit',
     'vala', 'c',
-    version: '0.1.2',
+    version: '0.1.3',
     meson_version: '>=0.56.0'
 )
 

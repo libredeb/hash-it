@@ -50,7 +50,7 @@ namespace Hashit.Widgets {
                 if (path != null) {
                     ((Hashit.App) app).on_claculate_hash (
                         new Gdk.FileList.from_array (
-                            { GLib.File.new_for_path(path) }
+                            { GLib.File.new_for_path (path) }
                         )
                     );
                 } else {

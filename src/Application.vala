@@ -496,11 +496,11 @@ namespace Hashit {
         }
 
         public void on_claculate_hash (Gdk.FileList file_list) {
-            thread = new GLib.Thread<int>("LongProcessThread", () => {
-                foreach (var file in file_list.get_files()) {
+            thread = new GLib.Thread<int> ("LongProcessThread", () => {
+                foreach (var file in file_list.get_files ()) {
                     if (file is GLib.File) {
                         var gio_file = (GLib.File) file;
-                        string file_path = gio_file.get_path();
+                        string file_path = gio_file.get_path ();
                         this.get_file_hash (file_path);
                     } else {
                         message ("File type is not recognized");
@@ -518,7 +518,7 @@ namespace Hashit {
                 path
             );
 
-            GLib.Idle.add(() => {
+            GLib.Idle.add (() => {
                 this.last_hash_entry.set_text (hash);
 
                 TextIter text_end_iter;
