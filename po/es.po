@@ -1,11 +1,11 @@
-# Spanish translations for com.github.libredeb.hashit package.
-# Copyright (C) 2025 THE com.github.libredeb.hashit'S COPYRIGHT HOLDER
-# This file is distributed under the same license as the com.github.libredeb.hashit package.
+# Spanish translations for io.github.libredeb.hashit package.
+# Copyright (C) 2025 THE io.github.libredeb.hashit'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the io.github.libredeb.hashit package.
 # Automatically generated, 2025.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: com.github.libredeb.hashit\n"
+"Project-Id-Version: io.github.libredeb.hashit\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-06-28 23:45-0300\n"
 "PO-Revision-Date: 2025-05-30 21:45-0300\n"
