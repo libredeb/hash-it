@@ -178,42 +178,12 @@ namespace Hashit {
             compare_button.set_margin_top (4);
 
             //Status Icons
-            this.result_status_img = new Image ();
+            this.result_status_img = new Image.from_icon_name ("result-status");
             this.result_status_img.add_css_class (Granite.STYLE_CLASS_LARGE_ICONS);
-            try {
-                var result_status_pixbuf = new Gdk.Pixbuf.from_file_at_scale (
-                    "/usr/share/hashit/gfx/result-status.svg", 24, 24, false
-                );
-                var result_status_texture = Gdk.Texture.for_pixbuf (result_status_pixbuf);
-                this.result_status_img.set_from_paintable (result_status_texture);
-            } catch (GLib.Error e) {
-                warning ("Error creating pixbuf icon for status image");
-                warning ("Check file /usr/share/hashit/gfx/result-status.svg");
-            }
-            Image result_ok_img = new Image ();
+            Image result_ok_img = new Image.from_icon_name ("result-ok");
             result_ok_img.add_css_class (Granite.STYLE_CLASS_LARGE_ICONS);
-            try {
-                var result_ok_pixbuf = new Gdk.Pixbuf.from_file_at_scale (
-                    "/usr/share/hashit/gfx/result-ok.svg", 24, 24, false
-                );
-                var result_ok_texture = Gdk.Texture.for_pixbuf (result_ok_pixbuf);
-                result_ok_img.set_from_paintable (result_ok_texture);
-            } catch (GLib.Error e) {
-                warning ("Error creating pixbuf icon for status_ok image");
-                warning ("Check file /usr/share/hashit/gfx/result-ok.svg");
-            }
-            Image result_error_img = new Image ();
+            Image result_error_img = new Image.from_icon_name ("result-error");
             result_error_img.add_css_class (Granite.STYLE_CLASS_LARGE_ICONS);
-            try {
-                var result_error_pixbuf = new Gdk.Pixbuf.from_file_at_scale (
-                    "/usr/share/hashit/gfx/result-error.svg", 24, 24, false
-                );
-                var result_error_texture = Gdk.Texture.for_pixbuf (result_error_pixbuf);
-                result_error_img.set_from_paintable (result_error_texture);
-            } catch (GLib.Error e) {
-                warning ("Error creating pixbuf icon for status_error image");
-                warning ("Check file /usr/share/hashit/gfx/result-error.svg");
-            }
 
             // Entrys
             last_hash_entry = new Entry ();
