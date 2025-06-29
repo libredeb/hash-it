@@ -567,7 +567,7 @@ namespace Hashit {
 
         public App () {
             Object (
-                application_id: "com.github.libredeb.hashit",
+                application_id: Constants.APP_ID,
                 flags: GLib.ApplicationFlags.HANDLES_OPEN
             );
         }

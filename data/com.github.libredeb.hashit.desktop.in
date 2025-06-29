@@ -7,7 +7,7 @@ Comment=Intuitive and simple Hash Checker Tool
 GenericName=Hash Checker
 
 Exec=com.github.libredeb.hashit
-Icon=hashit
+Icon=com.github.libredeb.hashit
 Keywords=hash;check;sum;md5;sha256;
 Terminal=false
 Categories=GNOME;GTK;Utility;

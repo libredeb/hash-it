@@ -7,5 +7,6 @@
 namespace Constants {
    public const string PROGRAM_NAME = "Hash-it";
    public const string EXEC_NAME = "hashit";
+   public const string APP_ID = "com.github.libredeb.hashit";
    public const string APP_YEARS = "2016-2025";
 }
