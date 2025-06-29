@@ -44,7 +44,7 @@ namespace Hashit {
             this.main_window = new Window ();
             this.main_window.set_size_request (750, 570);
             this.main_window.set_title (Constants.PROGRAM_NAME);
-            this.main_window.set_icon_name (Constants.EXEC_NAME);
+            this.main_window.set_icon_name (Constants.APP_ID);
             this.main_window.set_resizable (false);
             this.main_window.set_application (this);
 

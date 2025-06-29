@@ -1,11 +1,11 @@
-app-id: com.github.libredeb.hashit
+app-id: io.github.libredeb.hashit
 
 # Runtime
 runtime: io.elementary.Platform
 runtime-version: '8'
 sdk: io.elementary.Sdk
 
-command: com.github.libredeb.hashit
+command: io.github.libredeb.hashit
 
 finish-args:
   - '--share=ipc'
@@ -13,7 +13,7 @@ finish-args:
   - '--socket=wayland'
 
 modules:
-  - name: hashit
+  - name: Hash-it
     buildsystem: meson
     sources:
       - type: dir

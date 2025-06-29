@@ -1,14 +1,14 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
-# This file is distributed under the same license as the com.github.libredeb.hashit package.
+# This file is distributed under the same license as the io.github.libredeb.hashit package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: com.github.libredeb.hashit\n"
+"Project-Id-Version: io.github.libredeb.hashit\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-06-27 19:41-0300\n"
+"POT-Creation-Date: 2025-06-28 23:45-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -34,7 +34,7 @@ msgstr ""
 msgid "Original Hash:"
 msgstr ""
 
-#: src/Application.vala:150 src/Application.vala:485
+#: src/Application.vala:150 src/Application.vala:455
 msgid "Comparison Result"
 msgstr ""
 
@@ -47,36 +47,37 @@ msgstr ""
 msgid "Copy History"
 msgstr ""
 
-#: src/Application.vala:174 src/Application.vala:312
+#: src/Application.vala:174 src/Application.vala:282
 msgid "Compare"
 msgstr ""
 
-#: src/Application.vala:311
+#: src/Application.vala:281
 msgid "Results"
 msgstr ""
 
-#: src/Application.vala:335
+#: src/Application.vala:305
 msgid "Checksums match! File Integrity OK"
 msgstr ""
 
-#: src/Application.vala:354
+#: src/Application.vala:324
 msgid "Checksums do not match! File Integrity ERROR"
 msgstr ""
 
-#: src/Application.vala:452
+#: src/Application.vala:422
 msgid "Hash successfully copied"
 msgstr ""
 
-#: src/Application.vala:468
+#: src/Application.vala:438
 msgid "History successfully copied"
 msgstr ""
 
-#: src/Application.vala:498
+#: src/Application.vala:468
 msgid "Save as"
 msgstr ""
 
 #: src/Widgets/AboutDialog.vala:20
-msgid "The most intuitive and simple hash tool checker"
+#: data/io.github.libredeb.hashit.appdata.xml.in:14
+msgid "The most intuitive and simple hash checker tool"
 msgstr ""
 
 #: src/Widgets/FileDialog.vala:12
@@ -106,64 +107,74 @@ msgstr ""
 msgid "Drag & Drop File(s)"
 msgstr ""
 
-#: data/com.github.libredeb.hashit.desktop.in:5
-msgid "Hashit"
-msgstr ""
-
-#: data/com.github.libredeb.hashit.desktop.in:6
-msgid "Intuitive and simple Hash Checker Tool"
-msgstr ""
-
-#: data/com.github.libredeb.hashit.desktop.in:7
-msgid "Hash Checker"
-msgstr ""
-
-#: data/com.github.libredeb.hashit.desktop.in:11
-msgid "hash;check;sum;md5;sha256;"
-msgstr ""
-
-#: data/com.github.libredeb.hashit.appdata.xml.in:13
+#: data/io.github.libredeb.hashit.desktop.in:5
+#: data/io.github.libredeb.hashit.appdata.xml.in:13
 msgid "Hash-it"
 msgstr ""
 
-#: data/com.github.libredeb.hashit.appdata.xml.in:14
-msgid "The most intuitive and simple hash checker tool for elementary OS"
+#: data/io.github.libredeb.hashit.desktop.in:6
+msgid ""
+"Hash-it is an hash checker tool that helps you to validate the integrity of "
+"files"
 msgstr ""
 
-#: data/com.github.libredeb.hashit.appdata.xml.in:16
-msgid "Hashit is a fast and beautiful hash check tool."
+#: data/io.github.libredeb.hashit.desktop.in:7
+msgid "Hash Checker"
 msgstr ""
 
-#: data/com.github.libredeb.hashit.appdata.xml.in:17
+#: data/io.github.libredeb.hashit.desktop.in:11
+msgid "hash;check;sum;md5;sha256;"
+msgstr ""
+
+#: data/io.github.libredeb.hashit.appdata.xml.in:16
+msgid "Hash-it is a fast and beautiful hash check tool."
+msgstr ""
+
+#: data/io.github.libredeb.hashit.appdata.xml.in:17
 msgid ""
 "Writen in Vala and GTK+ 4.0 with the purpose to get the hash of file and "
 "compare it with other provided hash."
 msgstr ""
 
-#: data/com.github.libredeb.hashit.appdata.xml.in:18
+#: data/io.github.libredeb.hashit.appdata.xml.in:18
 msgid "Features included:"
 msgstr ""
 
-#: data/com.github.libredeb.hashit.appdata.xml.in:20
+#: data/io.github.libredeb.hashit.appdata.xml.in:20
 msgid "Generate most popular hashes of files"
 msgstr ""
 
-#: data/com.github.libredeb.hashit.appdata.xml.in:21
+#: data/io.github.libredeb.hashit.appdata.xml.in:21
 msgid "Drag and Drop"
 msgstr ""
 
-#: data/com.github.libredeb.hashit.appdata.xml.in:22
+#: data/io.github.libredeb.hashit.appdata.xml.in:22
 msgid "Compare current file hash with online provided hashes"
 msgstr ""
 
-#: data/com.github.libredeb.hashit.appdata.xml.in:29
-msgid "Hashit in action"
+#: data/io.github.libredeb.hashit.appdata.xml.in:29
+msgid "Hash-it in action"
 msgstr ""
 
-#: data/com.github.libredeb.hashit.appdata.xml.in:53
+#: data/io.github.libredeb.hashit.appdata.xml.in:53
 msgid "Juan Pablo Lozano"
 msgstr ""
 
-#: data/com.github.libredeb.hashit.appdata.xml.in:67
+#: data/io.github.libredeb.hashit.appdata.xml.in:67
+msgid ""
+"Graphics files have been improved so they are sandboxed within the same "
+"binary as gresources."
+msgstr ""
+
+#: data/io.github.libredeb.hashit.appdata.xml.in:68
+msgid "The app name and trademark have been updated."
+msgstr ""
+
+#: data/io.github.libredeb.hashit.appdata.xml.in:69
+msgid ""
+"Another minor details have been updated for publishing the app on AppCenter."
+msgstr ""
+
+#: data/io.github.libredeb.hashit.appdata.xml.in:74
 msgid "First release."
 msgstr ""

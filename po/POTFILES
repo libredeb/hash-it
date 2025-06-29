@@ -3,5 +3,5 @@ src/Widgets/AboutDialog.vala
 src/Widgets/FileDialog.vala
 src/Widgets/HeaderBar.vala
 src/Widgets/InputView.vala
-data/com.github.libredeb.hashit.desktop.in
-data/com.github.libredeb.hashit.appdata.xml.in
+data/io.github.libredeb.hashit.desktop.in
+data/io.github.libredeb.hashit.appdata.xml.in

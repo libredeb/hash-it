@@ -24,9 +24,9 @@ jobs:
     - uses: flatpak/flatpak-github-actions/flatpak-builder@v6
       with:
         # This is the name of the Bundle file we're building and can be anything you like
-        bundle: com.github.libredeb.hashit.flatpak
+        bundle: io.github.libredeb.hashit.flatpak
         # This uses your app's RDNN ID
-        manifest-path: com.github.libredeb.hashit.yml
+        manifest-path: io.github.libredeb.hashit.yml
 
         # You can automatically run any of the tests you've created as part of this workflow
         run-tests: true

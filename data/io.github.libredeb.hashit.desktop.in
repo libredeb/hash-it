@@ -2,14 +2,13 @@
 Version=1.0
 Type=Application
 
-Name=Hashit
-Comment=Intuitive and simple Hash Checker Tool
+Name=Hash-it
+Comment=Hash-it is an hash checker tool that helps you to validate the integrity of files
 GenericName=Hash Checker
 
-Exec=com.github.libredeb.hashit
-Icon=com.github.libredeb.hashit
+Exec=io.github.libredeb.hashit
+Icon=io.github.libredeb.hashit
 Keywords=hash;check;sum;md5;sha256;
 Terminal=false
 Categories=GNOME;GTK;Utility;
-Actions=AboutDialog;
 X-GNOME-Gettext-Domain=hashit
