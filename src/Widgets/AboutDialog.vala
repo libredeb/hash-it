@@ -17,7 +17,7 @@ namespace Hashit.Widgets {
         about.set_logo_icon_name (Constants.APP_ID);
         about.set_license ("GPL v3");
         about.set_license_type (Gtk.License.GPL_3_0);
-        about.set_comments (_("The most intuitive and simple hash tool checker"));
+        about.set_comments (_("The most intuitive and simple hash checker tool"));
         about.set_authors (
             {
                 "Juan Pablo Lozano <libredeb@gmail.com>"

@@ -17,6 +17,7 @@ namespace Hashit {
         public Adw.ToastOverlay toast_overlay;
         public Gtk.Settings settings;
         public Gtk.HeaderBar headerbar;
+        public Gtk.Spinner headerbar_spinner;
 
         public Gtk.Entry last_hash_entry;
         public Hashit.Widgets.Selection selection_box;
@@ -44,7 +45,7 @@ namespace Hashit {
             this.main_window = new Window ();
             this.main_window.set_size_request (750, 570);
             this.main_window.set_title (Constants.PROGRAM_NAME);
-            this.main_window.set_icon_name (Constants.EXEC_NAME);
+            this.main_window.set_icon_name (Constants.APP_ID);
             this.main_window.set_resizable (false);
             this.main_window.set_application (this);
 
@@ -496,16 +497,33 @@ namespace Hashit {
         }
 
         public void on_claculate_hash (Gdk.FileList file_list) {
-            thread = new GLib.Thread<int>("LongProcessThread", () => {
-                foreach (var file in file_list.get_files()) {
+            GLib.Idle.add (() => {
+                if (this.headerbar_spinner != null) {
+                    this.headerbar_spinner.set_visible (true);
+                    this.headerbar_spinner.start ();
+                }
+                return false;
+            });
+
+            thread = new GLib.Thread<int> ("LongProcessThread", () => {
+                foreach (var file in file_list.get_files ()) {
                     if (file is GLib.File) {
                         var gio_file = (GLib.File) file;
-                        string file_path = gio_file.get_path();
+                        string file_path = gio_file.get_path ();
                         this.get_file_hash (file_path);
                     } else {
                         message ("File type is not recognized");
                     }
                 }
+
+                GLib.Idle.add (() => {
+                    if (this.headerbar_spinner != null) {
+                        this.headerbar_spinner.stop ();
+                        this.headerbar_spinner.set_visible (false);
+                    }
+                    return false;
+                });
+                
                 return 0;
             });
         }
@@ -518,7 +536,7 @@ namespace Hashit {
                 path
             );
 
-            GLib.Idle.add(() => {
+            GLib.Idle.add (() => {
                 this.last_hash_entry.set_text (hash);
 
                 TextIter text_end_iter;

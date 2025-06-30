@@ -1,8 +1,8 @@
 # Project name and programming language
 project(
-    'com.github.libredeb.hashit',
+    'io.github.libredeb.hashit',
     'vala', 'c',
-    version: '0.1.2',
+    version: '0.1.3',
     meson_version: '>=0.56.0'
 )
 
@@ -11,7 +11,7 @@ i18n = import('i18n')
 # Set our translation domain
 add_global_arguments('-DGETTEXT_PACKAGE="@0@"'.format (meson.project_name()), language:'c')
 
-PROJECT_NAME = 'hashit'
+PROJECT_NAME = 'Hash-it'
 prefix = get_option('prefix')
 libdir = join_paths(prefix, get_option('libdir'))
 datadir = join_paths(prefix, get_option('datadir'))
@@ -98,7 +98,7 @@ endforeach
 
 # Install our .desktop file so the Applications Menu will see it
 i18n.merge_file(
-    input: 'data' / 'com.github.libredeb.hashit.desktop.in',
+    input: 'data' / meson.project_name() + '.desktop.in',
     output: meson.project_name() + '.desktop',
     po_dir: meson.project_source_root() / 'po',
     type: 'desktop',
@@ -108,25 +108,11 @@ i18n.merge_file(
 
 # Install our .appdata.xml file so AppCenter will see it
 i18n.merge_file(
-    input: 'data' / 'com.github.libredeb.hashit.appdata.xml.in',
+    input: 'data' / meson.project_name() + '.appdata.xml.in',
     output: meson.project_name() + '.metainfo.xml',
     po_dir: meson.project_source_root() / 'po',
     install: true,
     install_dir: get_option('datadir') / 'metainfo'
-)
-
-# Install gfx icon files
-install_data(
-    join_paths('data', 'gfx', 'result-error.svg'),
-    install_dir: join_paths(datadir, 'hashit', 'gfx')
-)
-install_data(
-    join_paths('data', 'gfx', 'result-ok.svg'),
-    install_dir: join_paths(datadir, 'hashit', 'gfx')
-)
-install_data(
-    join_paths('data', 'gfx', 'result-status.svg'),
-    install_dir: join_paths(datadir, 'hashit', 'gfx')
 )
 
 # Install manual page
