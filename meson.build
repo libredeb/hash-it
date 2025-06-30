@@ -11,6 +11,15 @@ i18n = import('i18n')
 # Set our translation domain
 add_global_arguments('-DGETTEXT_PACKAGE="@0@"'.format (meson.project_name()), language:'c')
 
+config_data = configuration_data()
+config_data.set_quoted('LOCALEDIR', join_paths(get_option('prefix'), get_option('localedir')))
+config_data.set_quoted('GETTEXT_PACKAGE', meson.project_name())
+config_file = configure_file(
+    input: 'src/Config.vala.in',
+    output: '@BASENAME@',
+    configuration: config_data
+)
+
 PROJECT_NAME = 'Hash-it'
 prefix = get_option('prefix')
 libdir = join_paths(prefix, get_option('libdir'))
@@ -54,6 +63,7 @@ ValaArgs = [
 # Create a new executable, list the files we want to compile, list the dependencies we need, and install
 executable(
     meson.project_name(),
+    config_file,
     asresources,
     'src/Widgets/InputView.vala',
     'src/Widgets/Selection.vala',

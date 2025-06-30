@@ -558,6 +558,10 @@ namespace Hashit {
                 application_id: Constants.APP_ID,
                 flags: GLib.ApplicationFlags.HANDLES_OPEN
             );
+            Intl.setlocale (LocaleCategory.ALL, "");
+            Intl.bindtextdomain (GETTEXT_PACKAGE, LOCALEDIR);
+            Intl.bind_textdomain_codeset (GETTEXT_PACKAGE, "UTF-8");
+            Intl.textdomain (GETTEXT_PACKAGE);
         }
 
         private static App app; // global App instance
