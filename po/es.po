@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: io.github.libredeb.hashit\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-06-29 21:21-0300\n"
+"POT-Creation-Date: 2025-06-30 00:38-0300\n"
 "PO-Revision-Date: 2025-05-30 21:45-0300\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -18,60 +18,60 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #. Labels
-#: src/Application.vala:133
+#: src/Application.vala:134
 msgid "Input File"
 msgstr "Archivo de entrada"
 
-#: src/Application.vala:135
+#: src/Application.vala:136
 msgid "Hash Type"
 msgstr "Tipo de Hash"
 
-#: src/Application.vala:137
+#: src/Application.vala:138
 msgid "Last Hash"
 msgstr "Último Hash"
 
-#: src/Application.vala:143
+#: src/Application.vala:144
 msgid "Original Hash:"
 msgstr "Hash Original:"
 
-#: src/Application.vala:150 src/Application.vala:455
+#: src/Application.vala:151 src/Application.vala:456
 msgid "Comparison Result"
 msgstr "Resultado de la comparación"
 
 #. Buttons
-#: src/Application.vala:170
+#: src/Application.vala:171
 msgid "Copy"
 msgstr "Copiar"
 
-#: src/Application.vala:173
+#: src/Application.vala:174
 msgid "Copy History"
 msgstr "Copiar Historial"
 
-#: src/Application.vala:174 src/Application.vala:282
+#: src/Application.vala:175 src/Application.vala:283
 msgid "Compare"
 msgstr "Comparar"
 
-#: src/Application.vala:281
+#: src/Application.vala:282
 msgid "Results"
 msgstr "Resultados"
 
-#: src/Application.vala:305
+#: src/Application.vala:306
 msgid "Checksums match! File Integrity OK"
 msgstr "Los hashes coinciden. Integridad del archivo OK"
 
-#: src/Application.vala:324
+#: src/Application.vala:325
 msgid "Checksums do not match! File Integrity ERROR"
 msgstr "Los hashes no coinciden! ERROR de integridad del archivo"
 
-#: src/Application.vala:422
+#: src/Application.vala:423
 msgid "Hash successfully copied"
 msgstr "Hash copiado exitosamente"
 
-#: src/Application.vala:438
+#: src/Application.vala:439
 msgid "History successfully copied"
 msgstr "Historial copiado exitosamente"
 
-#: src/Application.vala:468
+#: src/Application.vala:469
 msgid "Save as"
 msgstr "Guardar como"
 
@@ -129,8 +129,12 @@ msgstr "hash;check;sum;md5;sha256;"
 
 #: data/io.github.libredeb.hashit.appdata.xml.in:16
 #, fuzzy
-msgid "Hash-it is a fast and beautiful hash check tool."
-msgstr "Hash-it es una herramienta de verificación de hash rápida y bonita."
+msgid ""
+"Hash-it is a fast and beautiful hash check tool to validate a file "
+"integrity, to be sure of its consistency."
+msgstr ""
+"Hash-it es una herramienta de verificación de hash rápida y bonita para "
+"validar la integridad de un archivo, para estar seguro de su consistencia."
 
 #: data/io.github.libredeb.hashit.appdata.xml.in:17
 msgid ""
@@ -188,10 +192,3 @@ msgstr ""
 #: data/io.github.libredeb.hashit.appdata.xml.in:74
 msgid "First release."
 msgstr "Primer lanzamiento."
-
-#~ msgid ""
-#~ "Hash-it is an hash checker tool that helps you to validate the integrity "
-#~ "of files"
-#~ msgstr ""
-#~ "Hash-it es una herramienta de comprobación de hash que le ayuda a validar "
-#~ "la integridad de archivos"

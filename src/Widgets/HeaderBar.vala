@@ -40,7 +40,7 @@ namespace Hashit.Widgets {
         var clear_button = new Button.from_icon_name ("edit-clear");
         clear_button.set_tooltip_text (_("Clear"));
 
-        var spinner = new Spinner();
+        var spinner = new Gtk.Spinner ();
         spinner.set_name ("spinner");
         spinner.set_visible (false);
 

@@ -523,7 +523,7 @@ namespace Hashit {
                     }
                     return false;
                 });
-                
+
                 return 0;
             });
         }

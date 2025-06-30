@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: io.github.libredeb.hashit\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-06-29 21:21-0300\n"
+"POT-Creation-Date: 2025-06-30 00:38-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,60 +18,60 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 
 #. Labels
-#: src/Application.vala:133
+#: src/Application.vala:134
 msgid "Input File"
 msgstr ""
 
-#: src/Application.vala:135
+#: src/Application.vala:136
 msgid "Hash Type"
 msgstr ""
 
-#: src/Application.vala:137
+#: src/Application.vala:138
 msgid "Last Hash"
 msgstr ""
 
-#: src/Application.vala:143
+#: src/Application.vala:144
 msgid "Original Hash:"
 msgstr ""
 
-#: src/Application.vala:150 src/Application.vala:455
+#: src/Application.vala:151 src/Application.vala:456
 msgid "Comparison Result"
 msgstr ""
 
 #. Buttons
-#: src/Application.vala:170
+#: src/Application.vala:171
 msgid "Copy"
 msgstr ""
 
-#: src/Application.vala:173
+#: src/Application.vala:174
 msgid "Copy History"
 msgstr ""
 
-#: src/Application.vala:174 src/Application.vala:282
+#: src/Application.vala:175 src/Application.vala:283
 msgid "Compare"
 msgstr ""
 
-#: src/Application.vala:281
+#: src/Application.vala:282
 msgid "Results"
 msgstr ""
 
-#: src/Application.vala:305
+#: src/Application.vala:306
 msgid "Checksums match! File Integrity OK"
 msgstr ""
 
-#: src/Application.vala:324
+#: src/Application.vala:325
 msgid "Checksums do not match! File Integrity ERROR"
 msgstr ""
 
-#: src/Application.vala:422
+#: src/Application.vala:423
 msgid "Hash successfully copied"
 msgstr ""
 
-#: src/Application.vala:438
+#: src/Application.vala:439
 msgid "History successfully copied"
 msgstr ""
 
-#: src/Application.vala:468
+#: src/Application.vala:469
 msgid "Save as"
 msgstr ""
 
@@ -125,7 +125,9 @@ msgid "hash;check;sum;md5;sha256;"
 msgstr ""
 
 #: data/io.github.libredeb.hashit.appdata.xml.in:16
-msgid "Hash-it is a fast and beautiful hash check tool."
+msgid ""
+"Hash-it is a fast and beautiful hash check tool to validate a file "
+"integrity, to be sure of its consistency."
 msgstr ""
 
 #: data/io.github.libredeb.hashit.appdata.xml.in:17
