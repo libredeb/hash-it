@@ -17,6 +17,7 @@ namespace Hashit {
         public Adw.ToastOverlay toast_overlay;
         public Gtk.Settings settings;
         public Gtk.HeaderBar headerbar;
+        public Gtk.Spinner headerbar_spinner;
 
         public Gtk.Entry last_hash_entry;
         public Hashit.Widgets.Selection selection_box;
@@ -496,6 +497,14 @@ namespace Hashit {
         }
 
         public void on_claculate_hash (Gdk.FileList file_list) {
+            GLib.Idle.add (() => {
+                if (this.headerbar_spinner != null) {
+                    this.headerbar_spinner.set_visible (true);
+                    this.headerbar_spinner.start ();
+                }
+                return false;
+            });
+
             thread = new GLib.Thread<int> ("LongProcessThread", () => {
                 foreach (var file in file_list.get_files ()) {
                     if (file is GLib.File) {
@@ -506,6 +515,15 @@ namespace Hashit {
                         message ("File type is not recognized");
                     }
                 }
+
+                GLib.Idle.add (() => {
+                    if (this.headerbar_spinner != null) {
+                        this.headerbar_spinner.stop ();
+                        this.headerbar_spinner.set_visible (false);
+                    }
+                    return false;
+                });
+                
                 return 0;
             });
         }

@@ -39,10 +39,18 @@ namespace Hashit.Widgets {
         save_button.set_tooltip_text (_("Save results to a file"));
         var clear_button = new Button.from_icon_name ("edit-clear");
         clear_button.set_tooltip_text (_("Clear"));
+
+        var spinner = new Spinner();
+        spinner.set_name ("spinner");
+        spinner.set_visible (false);
+
         header_bar.pack_start (open_button);
         header_bar.pack_start (save_button);
         header_bar.pack_end (menu_button);
         header_bar.pack_end (clear_button);
+        header_bar.pack_end (spinner);
+
+        ((Hashit.App) app).headerbar_spinner = spinner;
 
         // Buttons functions
         open_button.clicked.connect (() => {
