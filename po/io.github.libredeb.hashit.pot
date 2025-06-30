@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: io.github.libredeb.hashit\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-06-28 23:45-0300\n"
+"POT-Creation-Date: 2025-06-29 21:21-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -113,9 +113,7 @@ msgid "Hash-it"
 msgstr ""
 
 #: data/io.github.libredeb.hashit.desktop.in:6
-msgid ""
-"Hash-it is an hash checker tool that helps you to validate the integrity of "
-"files"
+msgid "Validates the integrity of files"
 msgstr ""
 
 #: data/io.github.libredeb.hashit.desktop.in:7

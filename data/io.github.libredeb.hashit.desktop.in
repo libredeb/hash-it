@@ -3,7 +3,7 @@ Version=1.0
 Type=Application
 
 Name=Hash-it
-Comment=Hash-it is an hash checker tool that helps you to validate the integrity of files
+Comment=Validates the integrity of files
 GenericName=Hash Checker
 
 Exec=io.github.libredeb.hashit
