@@ -52,6 +52,52 @@ Hash-it is a fast and beautiful hash check tool. Writen in Vala and GTK+ 4.0 wit
 
 ## Developer Section
 
+### Flatpak
+
+Run `flatpak-builder` to configure the build environment, download dependencies, build, and install
+
+```bash
+   flatpak-builder build io.github.libredeb.hashit.yml --user --install --force-clean --install-deps-from=appcenter
+```
+
+Then execute with
+
+```bash
+   flatpak run io.github.libredeb.hashit
+```
+
+### Linting
+
+To lint Vala code, you can use [vala-lint](https://github.com/vala-lang/vala-lint), a tool designed to detect potential issues and enforce coding style in Vala projects.
+
+Read the instructions to install it on your local machine.
+
+**Usage**
+
+Run `io.elementary.vala-lint` command in your project source code directory:
+
+```sh
+io.elementary.vala-lint src/
+```
+
+### Validating AppStream Syntax
+
+To ensure your [AppStream XML file](data/io.github.libredeb.hashit.appdata.xml.in) is correctly structured, use the `appstream-util` tool from the [AppStream project](https://www.freedesktop.org/software/appstream/docs/).
+
+#### Installation
+
+```sh
+sudo apt install appstream
+```
+
+**Usage**
+
+Run the following command to validate the syntax of your AppStream XML file:
+
+```sh
+appstreamcli validate --pedantic data/io.github.libredeb.hashit.appdata.xml.in
+```
+
 ### Translations
 
 To add more supported languages, please, edit [LINGUAS](./po/LINGUAS) file and update the translation template file (a.k.a. `pot`) running next command:
