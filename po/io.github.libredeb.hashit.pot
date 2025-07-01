@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: io.github.libredeb.hashit\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-06-30 00:38-0300\n"
+"POT-Creation-Date: 2025-06-30 23:10-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -162,19 +162,25 @@ msgstr ""
 
 #: data/io.github.libredeb.hashit.appdata.xml.in:67
 msgid ""
+"Fixed a bug that prevented displaying the spanish translation from the "
+"installation via flatpak."
+msgstr ""
+
+#: data/io.github.libredeb.hashit.appdata.xml.in:72
+msgid ""
 "Graphics files have been improved so they are sandboxed within the same "
 "binary as gresources."
 msgstr ""
 
-#: data/io.github.libredeb.hashit.appdata.xml.in:68
+#: data/io.github.libredeb.hashit.appdata.xml.in:73
 msgid "The app name and trademark have been updated."
 msgstr ""
 
-#: data/io.github.libredeb.hashit.appdata.xml.in:69
+#: data/io.github.libredeb.hashit.appdata.xml.in:74
 msgid ""
 "Another minor details have been updated for publishing the app on AppCenter."
 msgstr ""
 
-#: data/io.github.libredeb.hashit.appdata.xml.in:74
+#: data/io.github.libredeb.hashit.appdata.xml.in:79
 msgid "First release."
 msgstr ""

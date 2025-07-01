@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: io.github.libredeb.hashit\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-06-30 00:38-0300\n"
+"POT-Creation-Date: 2025-06-30 23:10-0300\n"
 "PO-Revision-Date: 2025-05-30 21:45-0300\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -171,17 +171,25 @@ msgstr "Juan Pablo Lozano"
 
 #: data/io.github.libredeb.hashit.appdata.xml.in:67
 msgid ""
+"Fixed a bug that prevented displaying the spanish translation from the "
+"installation via flatpak."
+msgstr ""
+"Se corrigió un error que impedía mostrar la traducción al español desde la "
+"instalación mediante flatpak."
+
+#: data/io.github.libredeb.hashit.appdata.xml.in:72
+msgid ""
 "Graphics files have been improved so they are sandboxed within the same "
 "binary as gresources."
 msgstr ""
 "Se han mejorado los archivos gráficos para que estén dentro del mismo "
 "binario como gresources."
 
-#: data/io.github.libredeb.hashit.appdata.xml.in:68
+#: data/io.github.libredeb.hashit.appdata.xml.in:73
 msgid "The app name and trademark have been updated."
 msgstr "Se ha actualizado el nombre y la marca registrada de la aplicación."
 
-#: data/io.github.libredeb.hashit.appdata.xml.in:69
+#: data/io.github.libredeb.hashit.appdata.xml.in:74
 #, fuzzy
 msgid ""
 "Another minor details have been updated for publishing the app on AppCenter."
@@ -189,6 +197,6 @@ msgstr ""
 "Se han actualizado otros detalles menores para publicar la aplicación en "
 "AppCenter."
 
-#: data/io.github.libredeb.hashit.appdata.xml.in:74
+#: data/io.github.libredeb.hashit.appdata.xml.in:79
 msgid "First release."
 msgstr "Primer lanzamiento."
