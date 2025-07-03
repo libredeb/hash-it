@@ -11,7 +11,7 @@ finish-args:
   - '--share=ipc'
   - '--socket=fallback-x11'
   - '--socket=wayland'
-  - '--filesystem=host'
+  - '--filesystem=home'
 
 modules:
   - name: Hash-it
