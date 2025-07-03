@@ -531,12 +531,20 @@ namespace Hashit {
         public void get_file_hash (string path) {
             this.files_uris.append_val (path);
 
-            string hash = Hashit.Backend.Checksum.calculate_hash (
+            string? hash = Hashit.Backend.Checksum.calculate_hash (
                 this.selection_box.get_dropdown_value (),
                 path
             );
 
             GLib.Idle.add (() => {
+                if (hash == null) {
+                    var toast = new Adw.Toast (_("Failed to calculate hash"));
+                    toast.set_timeout (2);
+                    this.toast_overlay.add_toast (toast);
+
+                    return false;
+                }
+
                 this.last_hash_entry.set_text (hash);
 
                 TextIter text_end_iter;
