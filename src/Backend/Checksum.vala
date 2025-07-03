@@ -5,7 +5,7 @@
 
 namespace Hashit.Backend.Checksum {
 
-    public static string calculate_hash (string type, string file_path) {
+    public static string? calculate_hash (string type, string file_path) {
         GLib.Checksum checksum = null;
 
         switch (type) {
@@ -23,7 +23,12 @@ namespace Hashit.Backend.Checksum {
                 break;
         }
 
-        FileStream stream = FileStream.open (file_path, "rb");
+        FileStream? stream = FileStream.open (file_path, "rb");
+        if (stream == null) {
+            warning ("Failed to open \"%s\": %s", file_path, strerror(errno));
+            return null;
+        }
+
         uint8 buffer[100];
         size_t size;
 
