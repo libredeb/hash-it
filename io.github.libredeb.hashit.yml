@@ -9,9 +9,11 @@ command: io.github.libredeb.hashit
 
 finish-args:
   - '--share=ipc'
+  - '--device=dri'
   - '--socket=fallback-x11'
   - '--socket=wayland'
   - '--filesystem=home'
+  - '--talk-name=org.freedesktop.portal.*'
 
 modules:
   - name: Hash-it
