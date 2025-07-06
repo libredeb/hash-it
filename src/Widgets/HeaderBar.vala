@@ -34,7 +34,7 @@ namespace Hashit.Widgets {
         app.add_action (about_action);
 
         var open_button = new Button.from_icon_name ("folder-open");
-        open_button.set_tooltip_text (_("Open File"));
+        open_button.set_tooltip_text (_("Open file"));
         var save_button = new Button.from_icon_name ("document-save-as");
         save_button.set_tooltip_text (_("Save results to a file"));
         var clear_button = new Button.from_icon_name ("edit-clear");

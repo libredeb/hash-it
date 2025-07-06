@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: io.github.libredeb.hashit\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-06-30 23:10-0300\n"
+"POT-Creation-Date: 2025-07-05 23:23-0300\n"
 "PO-Revision-Date: 2025-05-30 21:45-0300\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -75,9 +75,12 @@ msgstr "Historial copiado exitosamente"
 msgid "Save as"
 msgstr "Guardar como"
 
+#: src/Application.vala:541
+msgid "Failed to calculate hash"
+msgstr "No se pudo calcular el hash"
+
 #: src/Widgets/AboutDialog.vala:20
 #: data/io.github.libredeb.hashit.appdata.xml.in:14
-#, fuzzy
 msgid "The most intuitive and simple hash checker tool"
 msgstr "La herramienta de comprobación de hash más intuitiva y sencilla"
 
@@ -90,8 +93,7 @@ msgid "About"
 msgstr "Acerca de"
 
 #: src/Widgets/HeaderBar.vala:37
-#, fuzzy
-msgid "Open File"
+msgid "Open file"
 msgstr "Abrir archivo"
 
 #: src/Widgets/HeaderBar.vala:39
@@ -106,7 +108,6 @@ msgstr "Limpiar"
 #. * LABELS
 #.
 #: src/Widgets/InputView.vala:34
-#, fuzzy
 msgid "Drag & Drop File(s)"
 msgstr "Arrastrar y soltar archivo(s)"
 
@@ -128,7 +129,6 @@ msgid "hash;check;sum;md5;sha256;"
 msgstr "hash;check;sum;md5;sha256;"
 
 #: data/io.github.libredeb.hashit.appdata.xml.in:16
-#, fuzzy
 msgid ""
 "Hash-it is a fast and beautiful hash check tool to validate a file "
 "integrity, to be sure of its consistency."
@@ -161,7 +161,6 @@ msgid "Compare current file hash with online provided hashes"
 msgstr "Comparar el hash del archivo actual con hashes proporcionados en línea"
 
 #: data/io.github.libredeb.hashit.appdata.xml.in:29
-#, fuzzy
 msgid "Hash-it in action"
 msgstr "Hash-it en acción"
 
@@ -190,7 +189,6 @@ msgid "The app name and trademark have been updated."
 msgstr "Se ha actualizado el nombre y la marca registrada de la aplicación."
 
 #: data/io.github.libredeb.hashit.appdata.xml.in:74
-#, fuzzy
 msgid ""
 "Another minor details have been updated for publishing the app on AppCenter."
 msgstr ""

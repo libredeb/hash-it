@@ -7,6 +7,7 @@
 
   <id>io.github.libredeb.hashit</id>
   <launchable type="desktop-id">io.github.libredeb.hashit.desktop</launchable>
+  <translation type="gettext">io.github.libredeb.hashit</translation>
   <metadata_license>CC-BY-4.0</metadata_license>
   <project_license>GPL-3.0-or-later</project_license>
 

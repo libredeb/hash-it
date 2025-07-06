@@ -25,7 +25,7 @@ namespace Hashit.Backend.Checksum {
 
         FileStream? stream = FileStream.open (file_path, "rb");
         if (stream == null) {
-            warning ("Failed to open \"%s\": %s", file_path, strerror(errno));
+            warning ("Failed to open \"%s\": %s", file_path, strerror (errno));
             return null;
         }
 
