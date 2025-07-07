@@ -13,7 +13,6 @@ finish-args:
   - '--socket=fallback-x11'
   - '--socket=wayland'
   - '--filesystem=home'
-  - '--talk-name=org.freedesktop.portal.*'
 
 modules:
   - name: Hash-it

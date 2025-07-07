@@ -10,6 +10,8 @@
 
 Hash-it is a fast and beautiful hash check tool. Writen in Vala and GTK+ 4.0 with the purpose to get the hash of file and compare it with other provided hash.
 
+[![Get it on AppCenter](https://appcenter.elementary.io/badge.svg)](https://appcenter.elementary.io/io.github.libredeb.hashit)
+
 ![screenshot](./data/screenshot.png)
 
 ## Compilation
